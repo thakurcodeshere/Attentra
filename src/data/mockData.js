@@ -2,7 +2,7 @@
    ATTENTRA SEED DATA (MOCK DATABASE & STATE)
    ========================================================================== */
 
-const ATTENTRA_DEFAULT_STATE = {
+export const ATTENTRA_DEFAULT_STATE = {
   currentUser: {
     name: "Alex Carter",
     role: "reviewer", // active view: landing, client, reviewer, admin
@@ -243,7 +243,6 @@ const ATTENTRA_DEFAULT_STATE = {
     }
   ],
 
-  // --- UPGRADE SCALING SEEDS ---
   teamRoster: [
     { email: "owner@stripe.com", role: "Owner", status: "Joined", joinedDate: "2026-06-01" },
     { email: "analyst@stripe.com", role: "Analyst", status: "Joined", joinedDate: "2026-06-15" },
@@ -263,13 +262,11 @@ const ATTENTRA_DEFAULT_STATE = {
   }
 };
 
-// Retrieve state from localStorage or load defaults
-function loadAppState() {
+export function loadAppState() {
   const stored = localStorage.getItem("attentra_state");
   if (stored) {
     try {
       const state = JSON.parse(stored);
-      // Ensure roster, invoices, and developer settings exist in stored state
       if (!state.teamRoster) state.teamRoster = [...ATTENTRA_DEFAULT_STATE.teamRoster];
       if (!state.billingInvoices) state.billingInvoices = [...ATTENTRA_DEFAULT_STATE.billingInvoices];
       if (!state.developerSettings) state.developerSettings = {...ATTENTRA_DEFAULT_STATE.developerSettings};
@@ -282,7 +279,6 @@ function loadAppState() {
   return JSON.parse(JSON.stringify(ATTENTRA_DEFAULT_STATE));
 }
 
-// Persist state to localStorage
-function saveAppState(state) {
+export function saveAppState(state) {
   localStorage.setItem("attentra_state", JSON.stringify(state));
 }

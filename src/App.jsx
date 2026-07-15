@@ -1,0 +1,207 @@
+import { useState, useEffect } from 'react';
+import { loadAppState, saveAppState } from './data/mockData';
+import LandingPage from './pages/LandingPage';
+import ClientPortal from './pages/ClientPortal';
+import ReviewerPortal from './pages/ReviewerPortal';
+import AdminPortal from './pages/AdminPortal';
+
+export default function App() {
+  const [state, setState] = useState(() => loadAppState());
+  const [activeView, setActiveView] = useState('landing');
+  const [toasts, setToasts] = useState([]);
+
+  // Sync state changes to localStorage
+  useEffect(() => {
+    saveAppState(state);
+  }, [state]);
+
+  // Toast Notification Engine helper
+  const showToast = (title, message, iconType = 'info') => {
+    const id = Date.now() + Math.random().toString(36).substr(2, 5);
+    const newToast = { id, title, message, iconType, removing: false };
+    
+    setToasts((prev) => [...prev, newToast]);
+
+    // Schedule removing state
+    setTimeout(() => {
+      setToasts((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, removing: true } : t))
+      );
+    }, 3700);
+
+    // Schedule full cleanup
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
+
+  // Slow Background simulated notifications
+  useEffect(() => {
+    const simulatedEvents = [
+      { title: "Escrow Deposited", text: "Client 'FinTech Startup' created campaign ($450 escrowed)", type: "success" },
+      { title: "Campaign Completed", text: "Thumbnail study 'A/B Theme' reached target audience quota.", type: "success" },
+      { title: "Auditor Warning", text: "Reviewer profile 'rev-903' failed keystroke timing checks.", type: "warning" },
+      { title: "Fraud Trigger Blocked", text: "Intercepted bot spoofing general demographic filters.", type: "fraud" },
+      { title: "Fast Match", text: "15 developers matched and accepted 'Usability Testing' campaign.", type: "info" }
+    ];
+
+    const interval = setInterval(() => {
+      // Do not interrupt reviewer workspace sandbox testing
+      const sandboxActive = document.getElementById('tab-reviewer-sandbox')?.classList.contains('active-sub-tab');
+      if (Math.random() < 0.2 && !sandboxActive && activeView !== 'reviewer') {
+        const ev = simulatedEvents[Math.floor(Math.random() * simulatedEvents.length)];
+        showToast(ev.title, ev.text, ev.type);
+      }
+    }, 12000);
+
+    return () => clearInterval(interval);
+  }, [activeView]);
+
+  const handleRoleChange = (role) => {
+    setActiveView(role);
+    setState(prev => ({
+      ...prev,
+      currentUser: { ...prev.currentUser, role }
+    }));
+  };
+
+  return (
+    <div className="app-wrapper">
+      {/* GLOBAL NAVBAR */}
+      <header className="global-navbar">
+        <div className="navbar-logo" onClick={() => handleRoleChange('landing')}>
+          <div className="logo-circle">
+            <i className="fa-solid fa-signature"></i>
+          </div>
+          Attentra
+        </div>
+
+        <nav className="navbar-menu-links">
+          <a href="#platform" className="nav-link" onClick={() => handleRoleChange('landing')}>Platform</a>
+          <a href="#solutions" className="nav-link" onClick={() => handleRoleChange('landing')}>Solutions</a>
+          <a href="#pricing" className="nav-link" onClick={() => handleRoleChange('landing')}>Pricing</a>
+          <a href="#docs" className="nav-link" onClick={() => handleRoleChange('landing')}>Documentation</a>
+        </nav>
+
+        {/* Dynamic User Panel & Role Selector */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <div className="role-nav">
+            <button 
+              className={`nav-role-btn ${activeView === 'landing' ? 'active' : ''}`}
+              onClick={() => handleRoleChange('landing')}
+            >
+              <i className="fa-solid fa-globe"></i> Landing
+            </button>
+            <button 
+              className={`nav-role-btn ${activeView === 'client' ? 'active' : ''}`}
+              onClick={() => handleRoleChange('client')}
+            >
+              <i className="fa-solid fa-briefcase"></i> Client Hub
+            </button>
+            <button 
+              className={`nav-role-btn ${activeView === 'reviewer' ? 'active' : ''}`}
+              onClick={() => handleRoleChange('reviewer')}
+            >
+              <i className="fa-solid fa-user-ninja"></i> Reviewer Hub
+            </button>
+            <button 
+              className={`nav-role-btn ${activeView === 'admin' ? 'active' : ''}`}
+              onClick={() => handleRoleChange('admin')}
+            >
+              <i className="fa-solid fa-shield-halved"></i> Admin
+            </button>
+          </div>
+
+          {/* User Header Widget */}
+          {activeView !== 'landing' && (
+            <div className="header-user-status" id="header-profile-widget">
+              <div className="status-avatar">
+                <i className={`fa-solid ${activeView === 'client' ? 'fa-building' : activeView === 'admin' ? 'fa-user-gear' : 'fa-user'}`}></i>
+              </div>
+              <div className="status-details">
+                <span className="user-name">
+                  {activeView === 'client' && 'Stripe Channel'}
+                  {activeView === 'reviewer' && state.currentUser.name}
+                  {activeView === 'admin' && 'Sentinel Admin'}
+                </span>
+                <div className="user-meta-scores">
+                  <span className="meta-score text-success">
+                    <i className="fa-solid fa-coins"></i>
+                    <span id="header-wallet">
+                      {activeView === 'client' && '1,080.00'}
+                      {activeView === 'reviewer' && state.currentUser.balance.toFixed(2)}
+                      {activeView === 'admin' && '64,200.00'}
+                    </span>
+                  </span>
+                  <span className="meta-score text-indigo">
+                    <i className="fa-solid fa-star"></i>
+                    <span id="header-reputation">
+                      {activeView === 'client' && '99.9'}
+                      {activeView === 'reviewer' && state.currentUser.reputation.toFixed(1)}
+                      {activeView === 'admin' && '100.0'}
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
+
+      {/* VIEWPORT ROUTER CONTENT */}
+      <main className="main-content">
+        {activeView === 'landing' && (
+          <LandingPage 
+            state={state} 
+            setView={handleRoleChange} 
+            showToast={showToast} 
+          />
+        )}
+        {activeView === 'client' && (
+          <ClientPortal 
+            state={state} 
+            setState={setState} 
+            showToast={showToast} 
+          />
+        )}
+        {activeView === 'reviewer' && (
+          <ReviewerPortal 
+            state={state} 
+            setState={setState} 
+            showToast={showToast} 
+          />
+        )}
+        {activeView === 'admin' && (
+          <AdminPortal 
+            state={state} 
+            setState={setState} 
+            showToast={showToast} 
+          />
+        )}
+      </main>
+
+      {/* TOAST CONTAINER */}
+      <div className="toast-container" id="toast-container">
+        {toasts.map((t) => {
+          let iconClass = 'fa-info-circle text-indigo';
+          if (t.iconType === 'success') iconClass = 'fa-check-circle text-emerald';
+          if (t.iconType === 'warning') iconClass = 'fa-exclamation-triangle text-amber';
+          if (t.iconType === 'error') iconClass = 'fa-times-circle text-rose';
+          if (t.iconType === 'fraud') iconClass = 'fa-user-ninja text-rose';
+
+          return (
+            <div key={t.id} className={`toast ${t.removing ? 'removing' : ''}`}>
+              <div className="toast-icon">
+                <i className={`fa-solid ${iconClass}`}></i>
+              </div>
+              <div className="toast-body">
+                <h5>{t.title}</h5>
+                <p>{t.message}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
