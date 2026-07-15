@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attentra | Verified Human Intelligence Platform</title>
+  <meta name="description" content="Get real human attention and verified actionable insights from target audiences before you launch your ads, videos, designs, or products.">
+  
+  <!-- Premium Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Chart.js CDN for interactive charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ================= DYNAMIC TOAST NOTIFICATION CONTAINER ================= -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ================= ANTI-FRAUD WARNING OVERLAY ================= -->
+  <div id="fraud-warning-overlay" class="fraud-overlay hidden">
+    <div class="fraud-card">
+      <div class="fraud-icon-wrapper">
+        <i class="fa-solid fa-triangle-exclamation pulse-red"></i>
+      </div>
+      <h2>Security Alert: Focus Lost</h2>
+      <p>Attentra's behavioral tracking has detected that you switched tabs or lost window focus. Inactive attention states damage survey validity.</p>
+      <div class="fraud-metrics-panel">
+        <div><span>Reputation Penalty Risk:</span> <strong class="text-rose">-1.5 pts</strong></div>
+        <div><span>Session Status:</span> <strong class="text-amber">Auditing</strong></div>
+      </div>
+      <button id="resume-task-btn" class="btn btn-primary">I am focused, Resume Task</button>
+    </div>
+  </div>
+
+  <!-- ================= MAIN LAYOUT WRAPPER ================= -->
+  <div class="app-wrapper">
+
+    <!-- 1. NAVIGATION BAR -->
+    <header class="global-navbar">
+      <div class="navbar-logo" id="logo-btn">
+        <div class="logo-circle">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <span>Attentra</span>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav class="navbar-menu-links">
+        <div class="nav-dropdown">
+          <button class="dropdown-trigger">Platform <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="dropdown-content">
+            <a href="#" onclick="switchView('landing')"><i class="fa-solid fa-layer-group"></i> Features Overview</a>
+            <a href="#" onclick="switchView('admin')"><i class="fa-solid fa-user-shield"></i> Fraud Prevention</a>
+            <a href="#" onclick="switchView('landing')"><i class="fa-solid fa-chart-line"></i> Benchmarking</a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <button class="dropdown-trigger">Solutions <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="dropdown-content">
+            <a href="#"><i class="fa-solid fa-play"></i> YouTubers & Creators</a>
+            <a href="#"><i class="fa-solid fa-window-restore"></i> Startups & SaaS</a>
+            <a href="#"><i class="fa-solid fa-building"></i> Agency & Enterprise</a>
+          </div>
+        </div>
+        <a href="#landing-pricing-anchor" class="nav-link">Pricing</a>
+        <a href="#landing-developer-anchor" class="nav-link">Developers</a>
+        <a href="#landing-trust-anchor" class="nav-link">Security & Trust</a>
+      </nav>
+      
+      <!-- Live Switcher for Demo Roles -->
+      <nav class="role-nav">
+        <button class="nav-role-btn active" data-role="landing"><i class="fa-solid fa-globe"></i> <span>Landing</span></button>
+        <button class="nav-role-btn" data-role="client"><i class="fa-solid fa-briefcase"></i> <span>Client Hub</span></button>
+        <button class="nav-role-btn" data-role="reviewer"><i class="fa-solid fa-user-check"></i> <span>Reviewer Hub</span></button>
+        <button class="nav-role-btn" data-role="admin"><i class="fa-solid fa-shield-halved"></i> <span>Admin</span></button>
+      </nav>
+
+      <!-- Dynamic Wallet / Reputation indicator in Header -->
+      <div class="header-user-status" id="header-profile-widget">
+        <div class="status-avatar">
+          <i class="fa-solid fa-user-astronaut"></i>
+        </div>
+        <div class="status-details">
+          <span class="user-name">Alex Carter (Reviewer)</span>
+          <div class="user-meta-scores">
+            <span class="meta-score text-success"><i class="fa-solid fa-wallet"></i> $<span id="header-wallet">145.50</span></span>
+            <span class="meta-score text-indigo"><i class="fa-solid fa-star"></i> <span id="header-reputation">98.4</span>%</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= VIEW PANELS CONTAINER ================= -->
+    <main class="main-content">
+
+      <!-- ================= 1. PUBLIC LANDING VIEW ================= -->
+      <section id="view-landing" class="view-panel active-view">
+        
+        <!-- 2. HERO SECTION -->
+        <div class="hero-section">
+          <div class="hero-grid-bg"></div>
+          <div class="hero-content">
+            <div class="pill-badge">
+              <span class="pulse-emerald"></span> Verified Human Attention & Insights
+            </div>
+            <h1 class="hero-title">Get Real Human Intelligence <br><span class="gradient-text">Before You Launch.</span></h1>
+            <p class="hero-subtitle">
+              Build the world's largest network of verified human reviewers that helps creators, brands, startups, and enterprises understand how real people think, react, and make decisions.
+            </p>
+            <div class="hero-ctas">
+              <button class="btn btn-primary btn-lg" onclick="switchView('client')">
+                <i class="fa-solid fa-rocket"></i> Launch Campaign
+              </button>
+              <button class="btn btn-secondary btn-lg" onclick="switchView('reviewer')">
+                <i class="fa-solid fa-coins"></i> Become Reviewer
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. LIVE PLATFORM STATISTICS -->
+        <div class="landing-container">
+          <div class="stats-counter-grid card glass-card">
+            <div class="counter-item">
+              <div class="counter-val text-indigo" data-target="12458">0</div>
+              <div class="counter-label">Active Reviewers</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-val text-emerald" data-target="1900000" data-format="short">0</div>
+              <div class="counter-label">Responses Submitted</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-val text-pink" data-target="15932">0</div>
+              <div class="counter-label">Campaigns Completed</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-val text-amber" data-target="96" data-suffix="%">0</div>
+              <div class="counter-label">Fraud Detection Accuracy</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-val text-indigo" data-target="72" data-suffix=" Countries">0</div>
+              <div class="counter-label">Global Coverage</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-val text-emerald" data-target="18" data-suffix=" Minutes">0</div>
+              <div class="counter-label">Average Delivery</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. TRUSTED BY -->
+        <div class="landing-container">
+          <h4 class="text-center text-muted uppercase tracking-wider margin-bottom-md" style="font-size: 0.8rem;">Trusted by Teams at</h4>
+          <div class="logo-cloud-grid">
+            <span class="logo-text"><i class="fa-brands fa-google"></i> Google</span>
+            <span class="logo-text"><i class="fa-brands fa-microsoft"></i> Microsoft</span>
+            <span class="logo-text"><i class="fa-solid fa-font"></i> Adobe</span>
+            <span class="logo-text"><i class="fa-solid fa-palette"></i> Canva</span>
+            <span class="logo-text"><i class="fa-solid fa-play"></i> Netflix</span>
+            <span class="logo-text"><i class="fa-solid fa-n"></i> Notion</span>
+            <span class="logo-text"><i class="fa-solid fa-robot"></i> OpenAI</span>
+            <span class="logo-text"><i class="fa-brands fa-github"></i> GitHub</span>
+            <span class="logo-text"><i class="fa-brands fa-spotify"></i> Spotify</span>
+            <span class="logo-text"><i class="fa-brands fa-meta"></i> Meta</span>
+          </div>
+        </div>
+
+        <!-- 5. PRODUCT OVERVIEW & WORKFLOW -->
+        <div class="landing-container text-center">
+          <div class="pill-badge-indigo">Product Workflow</div>
+          <h2 class="margin-top-sm">How Attentra Delivers Insights</h2>
+          <p class="muted max-width-650 margin-auto margin-bottom-md">From submission to actionable analytics in four streamlined, secure steps.</p>
+          
+          <div class="workflow-cards-flex margin-top-lg">
+            <div class="workflow-card-mini card glass-card">
+              <div class="workflow-num">01</div>
+              <h4>Submit Campaign</h4>
+              <p class="small muted">Upload links, mockups, or videos. Define specialized filters.</p>
+            </div>
+            <div class="arrow-indicator"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="workflow-card-mini card glass-card">
+              <div class="workflow-num">02</div>
+              <h4>Human Review</h4>
+              <p class="small muted">Qualified matching humans test and write structured remarks.</p>
+            </div>
+            <div class="arrow-indicator"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="workflow-card-mini card glass-card">
+              <div class="workflow-num">03</div>
+              <h4>AI Verification</h4>
+              <p class="small muted">Neural classifiers analyze quality, verify focus, and intercept bots.</p>
+            </div>
+            <div class="arrow-indicator"><i class="fa-solid fa-chevron-right"></i></div>
+            <div class="workflow-card-mini card glass-card">
+              <div class="workflow-num">04</div>
+              <h4>Actionable Reports</h4>
+              <p class="small muted">Access maps, timelines, lists, and summary suggestions.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. INTERACTIVE DEMO -->
+        <div class="landing-container">
+          <div class="card glass-card border-glow-indigo text-center">
+            <div class="pricing-badge">Interactive Playground</div>
+            <h2>Experience the Intelligence Engine</h2>
+            <p class="muted small margin-bottom-md">Upload a mock layout image and generate instant simulated feedback reports.</p>
+            
+            <div class="playground-demo-box grid-2">
+              <div class="demo-upload-panel">
+                <div class="mock-upload-area" id="demo-mock-upload-btn">
+                  <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2.2rem; color: var(--primary);"></i>
+                  <h4>Select Mock Page Design</h4>
+                  <p class="small muted">Click to select fintech mockup image</p>
+                </div>
+                <div class="form-group margin-top-md text-left">
+                  <label>Select Feedback Objective:</label>
+                  <select class="form-input" id="demo-mock-objective">
+                    <option value="conversion">Optimize sign-up rate & CTA legibility</option>
+                    <option value="trust">Evaluate product trust indicators</option>
+                    <option value="navigation">Friction in navigations & widgets</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary margin-top-sm" id="demo-mock-run-btn" style="width: 100%;">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Generate AI Analysis
+                </button>
+              </div>
+
+              <div class="demo-output-panel text-left">
+                <div class="demo-report-placeholder" id="demo-mock-report-placeholder">
+                  <i class="fa-solid fa-chart-line" style="font-size:2rem; color:var(--border-subtle)"></i>
+                  <p class="muted small">Uploaded asset analysis details will render here.</p>
+                </div>
+                <div class="demo-report-actual hidden" id="demo-mock-report-actual">
+                  <h4 class="text-indigo"><i class="fa-solid fa-square-poll-vertical"></i> Simulated AI Sentiment Analysis</h4>
+                  <div class="radial-score-large text-emerald" style="font-size:1.8rem;">92% Sentiment Index</div>
+                  <p class="small margin-top-sm"><strong>AI Summary:</strong> Primary Call to Action has high visibility, but 35% of developers express confusion regarding billing models explained on the mock card.</p>
+                  <h5 class="margin-top-md text-rose">Recommendations</h5>
+                  <ul class="styled-list list-rose small">
+                    <li>Clarify monthly vs annual tier switches near pricing cards.</li>
+                    <li>Align colors of signup buttons to match visual contrast levels.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. SOLUTIONS GRID -->
+        <div class="landing-container text-center">
+          <div class="pill-badge">Use Cases</div>
+          <h2 class="margin-top-sm">Optimized for Every Digital Asset</h2>
+          <div class="solutions-grid margin-top-lg">
+            <div class="solution-card card glass-card">
+              <i class="fa-brands fa-youtube font-rose"></i>
+              <h4>YouTubers & Video</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-mobile-screen-button font-indigo"></i>
+              <h4>Mobile Apps</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-gamepad font-emerald"></i>
+              <h4>Game Studios</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-laptop-code font-pink"></i>
+              <h4>SaaS Websites</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-window-maximize font-amber"></i>
+              <h4>Landing Pages</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-rectangle-ad font-rose"></i>
+              <h4>Advertisements</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-box-open font-indigo"></i>
+              <h4>Packaging</h4>
+            </div>
+            <div class="solution-card card glass-card">
+              <i class="fa-solid fa-pencil font-emerald"></i>
+              <h4>UI/UX Prototypes</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. WHY NOT SURVEYS? COMPARISON TABLE -->
+        <div class="landing-container">
+          <div class="card glass-card text-center">
+            <h2>Why Traditional Surveys Fail</h2>
+            <p class="muted small margin-bottom-md">Attentra matches verified human attention to eliminate static metrics issues.</p>
+            
+            <div class="table-container margin-top-lg">
+              <table class="comparison-matrix-table">
+                <thead>
+                  <tr>
+                    <th>Feature Metric</th>
+                    <th>Legacy Surveys</th>
+                    <th class="table-highlight-col">Attentra Platform</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Feedback Format</td>
+                    <td>Static Multiple Choice</td>
+                    <td class="table-highlight-col">Interactive Timelines & Coordinates</td>
+                  </tr>
+                  <tr>
+                    <td>Target Verification</td>
+                    <td>Basic Self-Reported Demographics</td>
+                    <td class="table-highlight-col">Identity Verification & Fingerprints</td>
+                  </tr>
+                  <tr>
+                    <td>Review Quality Audit</td>
+                    <td>None (High bot submissions risk)</td>
+                    <td class="table-highlight-col">AI Semantic Scanning & Pacing checks</td>
+                  </tr>
+                  <tr>
+                    <td>Analysis Pacing</td>
+                    <td>Slow Manual Sorting (Days)</td>
+                    <td class="table-highlight-col">Real-Time AI Insight Dashboards</td>
+                  </tr>
+                  <tr>
+                    <td>Attention Monitoring</td>
+                    <td>No active focus validation</td>
+                    <td class="table-highlight-col">Behavioral Focus & Lost Tab tracking</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. CAMPAIGN BUILDER & 10. AI ANALYSIS SHOWCASE -->
+        <div class="landing-container grid-2">
+          <div class="card glass-card">
+            <h3><i class="fa-solid fa-sliders text-indigo"></i> AI Sentiment & Insight Clustering</h3>
+            <p class="small muted">Attentra processes qualitative feedback and tags keywords into emotional themes automatically.</p>
+            <div class="ai-sentiment-visualizer margin-top-md">
+              <div class="sentiment-bar-pair">
+                <span>Confidence score: <strong>94% Excellent</strong></span>
+                <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 94%"></div></div>
+              </div>
+              <div class="sentiment-bar-pair">
+                <span>Emotion score: <strong>Trustworthiness (84%)</strong></span>
+                <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 84%"></div></div>
+              </div>
+            </div>
+            <div class="keyword-cloud margin-top-md">
+              <span class="badge badge-purple">Confusing UI</span>
+              <span class="badge badge-emerald">Premium Feel</span>
+              <span class="badge badge-rose">Billing Drop-Off</span>
+              <span class="badge badge-indigo">Fast Signup</span>
+            </div>
+          </div>
+
+          <div class="card glass-card">
+            <h3><i class="fa-solid fa-crosshairs text-pink"></i> Usability Friction Hotspots</h3>
+            <p class="small muted">Interactive canvas tracking coordinates where testers lost patience or failed navigations.</p>
+            <div class="clickmap-wrapper margin-top-md" style="height: 180px;">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" class="clickmap-bg" alt="Friction Preview">
+              <!-- Mock visual glow coordinates overlay -->
+              <div class="clickmap-pin" style="left: 30%; top: 40%">1</div>
+              <div class="clickmap-pin" style="left: 65%; top: 75%">2</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. AUDIENCE SEGMENTATION -->
+        <div class="landing-container text-center">
+          <h2>High-fidelity Demographic Tagging</h2>
+          <p class="muted small max-width-650 margin-auto">Target specialized audiences matched across our verified reviewer network.</p>
+          <div class="badges-flex margin-top-lg justify-center">
+            <span class="credential-badge"><i class="fa-solid fa-code"></i> Developers</span>
+            <span class="credential-badge"><i class="fa-solid fa-stethoscope"></i> Doctors & Medical</span>
+            <span class="credential-badge"><i class="fa-solid fa-graduation-cap"></i> Students</span>
+            <span class="credential-badge"><i class="fa-solid fa-gamepad"></i> Gamers</span>
+            <span class="credential-badge"><i class="fa-solid fa-users"></i> Parents & Families</span>
+            <span class="credential-badge"><i class="fa-solid fa-user-tie"></i> Managers & Founders</span>
+            <span class="credential-badge"><i class="fa-solid fa-compass-drafting"></i> Designers</span>
+          </div>
+        </div>
+
+        <!-- 12. REVIEWER REPUTATION PROFILE PREVIEW -->
+        <div class="landing-container">
+          <div class="card glass-card profile-showcase-card max-width-600 margin-auto">
+            <div class="profile-showcase-header">
+              <div class="status-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+              <div>
+                <h4>Verified Analyst #14028</h4>
+                <div class="star-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              </div>
+              <div class="reputation-show-val">98.5% Trust Score</div>
+            </div>
+            
+            <div class="grid-2 margin-top-md">
+              <div class="metric-row"><span>Accuracy index:</span> <strong>97.2%</strong></div>
+              <div class="metric-row"><span>Platform Level:</span> <strong class="text-indigo">18 (Enterprise Approved)</strong></div>
+              <div class="metric-row"><span>Total Completed Tasks:</span> <strong>342</strong></div>
+              <div class="metric-row"><span>Historical Earnings:</span> <strong class="text-emerald">$3,821.50</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13. ENTERPRISE SECURITY & 14. FRAUD DETECTION SYSTEM -->
+        <div class="landing-container" id="landing-trust-anchor">
+          <div class="card glass-card border-glow-emerald">
+            <div class="card-icon-header font-emerald"><i class="fa-solid fa-shield-halved"></i> Enterprise-Grade Fraud Defenses</div>
+            <p class="muted small">How our automated checks ensure high-quality attention insights:</p>
+            
+            <div class="security-steps-flex margin-top-md">
+              <div class="security-step-card text-center">
+                <i class="fa-solid fa-fingerprint font-indigo"></i>
+                <h5>Device Fingerprint</h5>
+                <p class="small muted">Intercept duplicate accounts & botnets.</p>
+              </div>
+              <div class="security-step-card text-center">
+                <i class="fa-solid fa-eye font-pink"></i>
+                <h5>Behavioral Track</h5>
+                <p class="small muted">Monitors active focus, scrolls, and blur losses.</p>
+              </div>
+              <div class="security-step-card text-center">
+                <i class="fa-solid fa-keyboard font-amber"></i>
+                <h5>Keystroke Analysis</h5>
+                <p class="small muted">Calculates velocity patterns to block automated macros.</p>
+              </div>
+              <div class="security-step-card text-center">
+                <i class="fa-solid fa-wand-magic-sparkles font-emerald"></i>
+                <h5>AI Validator</h5>
+                <p class="small muted">Parses semantic coherence of logs.</p>
+              </div>
+            </div>
+            
+            <div class="compliance-row-logos margin-top-lg">
+              <span class="badge badge-emerald"><i class="fa-solid fa-lock"></i> SOC 2 Compliant</span>
+              <span class="badge badge-emerald"><i class="fa-solid fa-circle-check"></i> ISO 27001</span>
+              <span class="badge badge-emerald"><i class="fa-solid fa-shield"></i> GDPR Data Privacy Guard</span>
+              <span class="badge badge-emerald"><i class="fa-solid fa-server"></i> AES-256 Encryption</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15. MARKETPLACE ANIMATION & 16. AI REPORT PREVIEW -->
+        <div class="landing-container">
+          <div class="card glass-card chat-report-card">
+            <h3><i class="fa-solid fa-comment-dots text-indigo"></i> AI Assistant Analytics Portal</h3>
+            <p class="small muted">Interact with your reports using conversation prompts similar to chat clients.</p>
+            
+            <div class="chat-mock-container margin-top-md">
+              <div class="chat-message msg-user">
+                <span class="chat-role">You:</span> What were the top complaints about our landing page headline options?
+              </div>
+              <div class="chat-message msg-ai">
+                <span class="chat-role font-indigo"><i class="fa-solid fa-brain"></i> Attentra AI:</span>
+                <p>Based on 65 verified reviewer responses, the primary issues identified were:</p>
+                <ul class="styled-list list-rose small">
+                  <li><strong>Headline B ("Scaling $100M with Code")</strong> was perceived as spammy or untrustworthy by 48% of tech managers.</li>
+                  <li><strong>Headline A ("How we scaled to $100M ARR")</strong> was preferred due to clean styling and clear visual alignment.</li>
+                </ul>
+                <div class="comment-meta">Confidence index: 96.5% | Sample pool matched: Developers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17. PRICING & 18. ROI CALCULATOR -->
+        <div class="landing-container" id="landing-pricing-anchor">
+          <div class="text-center">
+            <div class="pill-badge-indigo">Subscription Tiers</div>
+            <h2 class="margin-top-sm">Scalable Pricing Packages</h2>
+          </div>
+
+          <div class="pricing-packages-grid margin-top-lg">
+            <!-- Free / Starter -->
+            <div class="pricing-col card glass-card">
+              <h4>Free Demo</h4>
+              <div class="price-val">$0</div>
+              <p class="small muted">Try out interactive tool elements on test datasets.</p>
+              <ul class="styled-list list-emerald small">
+                <li>3 basic active projects</li>
+                <li>General audience target</li>
+                <li>Static clickmaps</li>
+              </ul>
+              <button class="btn btn-secondary btn-sm margin-top-md" onclick="switchView('reviewer')" style="width: 100%;">Sign Up Free</button>
+            </div>
+            
+            <!-- Growth -->
+            <div class="pricing-col card glass-card border-glow-indigo">
+              <div class="pricing-card-badge">Most Popular</div>
+              <h4>Growth Plan</h4>
+              <div class="price-val">$149<span class="period">/mo</span></div>
+              <p class="small muted">For active creators, startups, and product innovators.</p>
+              <ul class="styled-list list-emerald small">
+                <li>Unlimited draft campaigns</li>
+                <li>Advanced cohort segmentation</li>
+                <li>Timeline retention heatmaps</li>
+                <li>Basic API token credentials</li>
+              </ul>
+              <button class="btn btn-primary btn-sm margin-top-md" onclick="switchView('client')" style="width: 100%;">Launch Growth</button>
+            </div>
+
+            <!-- Enterprise / Scale -->
+            <div class="pricing-col card glass-card">
+              <h4>Enterprise Scale</h4>
+              <div class="price-val">Custom</div>
+              <p class="small muted">Dedicated workspaces, SLAs, security controls, and audits.</p>
+              <ul class="styled-list list-emerald small">
+                <li>Custom reviewer matching pool</li>
+                <li>SOC2 access control & Webhooks</li>
+                <li>Multi-stage AI auditing engines</li>
+                <li>1-on-1 research engineer support</li>
+              </ul>
+              <button class="btn btn-secondary btn-sm margin-top-md" onclick="switchView('client')" style="width: 100%;">Contact Sales</button>
+            </div>
+          </div>
+
+          <!-- ROI Calculator Card -->
+          <div class="card glass-card pricing-card margin-top-lg text-center">
+            <h2>Platform Yield Calculator (ROI)</h2>
+            <p class="muted small">Estimate performance deliverables based on your monthly research budget.</p>
+            
+            <div class="calculator-grid">
+              <div class="calc-slider-group">
+                <label for="roi-budget-input">Monthly Research Budget: $<span id="roi-budget-val" class="highlight-val">500</span></label>
+                <input type="range" id="roi-budget-input" min="100" max="5000" step="100" value="500" class="styled-slider">
+              </div>
+              <div class="calc-select-group">
+                <label>Reviewer Profile Requirement:</label>
+                <select id="roi-audience-input" class="form-input" onchange="updateROICalculator()">
+                  <option value="3.00">General Consumer ($3.00 / insight)</option>
+                  <option value="6.00">Technical Specialists ($6.00 / insight)</option>
+                  <option value="15.00">Executive Cohorts ($15.00 / insight)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="roi-results-grid grid-3 margin-top-md">
+              <div class="roi-res-card">
+                <span class="small muted">Expected Responses</span>
+                <div class="value font-indigo" id="roi-res-responses">166</div>
+              </div>
+              <div class="roi-res-card">
+                <span class="small muted">Est. Delivery Speed</span>
+                <div class="value font-emerald" id="roi-res-speed">15 Mins</div>
+              </div>
+              <div class="roi-res-card">
+                <span class="small muted">Insights Generated</span>
+                <div class="value font-pink" id="roi-res-insights">32 Items</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 19. INTEGRATIONS CLOUD -->
+        <div class="landing-container text-center">
+          <h2>Workflow Integrations</h2>
+          <p class="muted small margin-bottom-md">Connect Attentra to your existing dev, product, and notification tools.</p>
+          <div class="logo-cloud-grid scrolling-logo-cloud">
+            <span class="logo-text"><i class="fa-brands fa-github"></i> GitHub</span>
+            <span class="logo-text"><i class="fa-brands fa-slack"></i> Slack</span>
+            <span class="logo-text"><i class="fa-brands fa-discord"></i> Discord</span>
+            <span class="logo-text"><i class="fa-solid fa-n"></i> Notion</span>
+            <span class="logo-text"><i class="fa-brands fa-jira"></i> Jira</span>
+            <span class="logo-text"><i class="fa-brands fa-figma"></i> Figma</span>
+            <span class="logo-text"><i class="fa-solid fa-network-wired"></i> Zapier</span>
+            <span class="logo-text"><i class="fa-solid fa-code-merge"></i> n8n</span>
+          </div>
+        </div>
+
+        <!-- 20. DEVELOPER SECTION -->
+        <div class="landing-container" id="landing-developer-anchor">
+          <div class="card glass-card developer-playground-card grid-2-1">
+            <div class="code-editor-wrapper">
+              <div class="editor-header">
+                <div class="editor-tabs">
+                  <button class="code-tab active-code-tab" data-lang="curl">cURL</button>
+                  <button class="code-tab" data-lang="js">Node.js</button>
+                  <button class="code-tab" data-lang="python">Python</button>
+                  <button class="code-tab" data-lang="go">Go</button>
+                </div>
+                <div class="editor-controls">
+                  <span class="editor-circle"></span>
+                  <span class="editor-circle"></span>
+                </div>
+              </div>
+              <pre class="code-body-pre"><code id="code-playground-box" class="fira-code font-indigo">
+curl -X POST "https://api.attentra.io/v1/campaigns" \
+  -H "Authorization: Bearer sec_att_live83h2..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "FinTech Signup Flow Usability",
+    "type": "website",
+    "url": "https://fintechlaunch.io/dashboard",
+    "target": { "occupation": "Developers" }
+  }'
+              </code></pre>
+            </div>
+            <div class="developer-info-text text-left">
+              <div class="badge badge-purple">Developer Hub</div>
+              <h3 class="margin-top-sm">API-First Research Infrastructure</h3>
+              <p class="small muted">Trigger human attention campaigns programmatically from your GitHub Actions pipelines or Vercel deployment hooks automatically.</p>
+              <ul class="styled-list list-emerald small">
+                <li>SDK library packages in 5 languages.</li>
+                <li>Webhooks payload delivery alerts.</li>
+                <li>REST API limits up to 10k requests/min.</li>
+              </ul>
+              <button class="btn btn-secondary btn-sm margin-top-md" onclick="showToast('Docs Loaded', 'Quickstart API documentation downloaded.', 'success')">
+                <i class="fa-solid fa-book"></i> Read API Docs
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 28. TESTIMONIALS -->
+        <div class="landing-container text-center">
+          <h2>Loved by Marketing & Dev Teams</h2>
+          <div class="grid-3 margin-top-lg text-left">
+            <div class="card glass-card testimonial-card">
+              <div class="star-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p class="small margin-top-sm">"We saved over $12,000 in ad waste by running A/B thumbnail studies on Attentra before launching our tech courses. The insights are incredibly detailed."</p>
+              <div class="testimonial-footer margin-top-md">
+                <div class="status-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                <div>
+                  <h5>Marques T.</h5>
+                  <span class="small muted">YouTube Tech Creator</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card glass-card testimonial-card">
+              <div class="star-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p class="small margin-top-sm">"Attentra's coordinate clickmap identified exactly why users got confused by our fintech dashboard. We reduced checkout drop-offs by 42% in 2 days."</p>
+              <div class="testimonial-footer margin-top-md">
+                <div class="status-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                <div>
+                  <h5>Sarah K.</h5>
+                  <span class="small muted">VP Product at FintechLaunch</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="card glass-card testimonial-card">
+              <div class="star-rating"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <p class="small margin-top-sm">"The developer API is fantastic. We now trigger automated website usability tests on every production Vercel deployment hook instantly."</p>
+              <div class="testimonial-footer margin-top-md">
+                <div class="status-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                <div>
+                  <h5>Alex M.</h5>
+                  <span class="small muted">Lead DevOps Engineer</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 30. FAQ SECTION -->
+        <div class="landing-container">
+          <div class="card glass-card">
+            <h2 class="text-center">Frequently Asked Questions</h2>
+            <div class="faq-accordion-list margin-top-lg">
+              
+              <div class="faq-item">
+                <button class="faq-trigger">Who are the reviewers on the Attentra Platform? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                  <p class="small muted">Reviewers are verified professionals, developers, parents, and students worldwide. They must pass identity verification and maintain a reputation score > 90% to receive matched campaigns.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-trigger">How does the platform block bot submissions and spam? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                  <p class="small muted">We implement multi-stage security: device fingerprinting blocks duplicate users, window focus blur tracking monitors attention states, and neural classifiers analyze the typing velocity and semantic coherence of all written feedback.</p>
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-trigger">What is the API-First framework integration? <i class="fa-solid fa-chevron-down"></i></button>
+                <div class="faq-answer">
+                  <p class="small muted">Developers can trigger campaigns programmatically using API keys and listen to webhook events. We return structured JSON coordinates, sentiment distributions, and AI-summarized insights directly to your systems.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 31. NEWSLETTER -->
+        <div class="landing-container">
+          <div class="card glass-card text-center border-glow-indigo">
+            <h2>Get Human Attention Updates</h2>
+            <p class="muted small max-width-650 margin-auto margin-bottom-md">Receive articles on conversion optimizations, UX designs, and human cognitive trends.</p>
+            <div class="newsletter-input-box margin-top-md">
+              <input type="email" placeholder="enter your work email" class="form-input" style="max-width: 320px; display: inline-block;">
+              <button class="btn btn-primary btn-sm" onclick="showToast('Subscription Active', 'Welcome to Attentra Intelligence reports.', 'success')">Subscribe</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 32. FOOTER -->
+        <footer class="landing-footer">
+          <div class="footer-grid">
+            <div class="footer-col-logo">
+              <div class="navbar-logo" style="margin-bottom:10px;">
+                <div class="logo-circle"><i class="fa-solid fa-brain"></i></div>
+                <span>Attentra</span>
+              </div>
+              <p class="small muted">Get real human attention and verified actionable insights before you launch.</p>
+            </div>
+            
+            <div class="footer-col-links">
+              <h5>Platform</h5>
+              <a href="#" onclick="switchView('landing')">Overview</a>
+              <a href="#landing-pricing-anchor">Pricing</a>
+              <a href="#landing-trust-anchor">Security</a>
+              <a href="#" onclick="switchView('admin')">Fraud logs</a>
+            </div>
+
+            <div class="footer-col-links">
+              <h5>Developers</h5>
+              <a href="#landing-developer-anchor">API Access</a>
+              <a href="#">SDK Libraries</a>
+              <a href="#">GitHub Repo</a>
+              <a href="#">Webhook Specs</a>
+            </div>
+
+            <div class="footer-col-links">
+              <h5>Company</h5>
+              <a href="#">About Vision</a>
+              <a href="#">Careers</a>
+              <a href="#">Privacy policy</a>
+              <a href="#">Terms & Conditions</a>
+            </div>
+          </div>
+          
+          <div class="footer-bottom-row">
+            <span class="small muted">&copy; 2026 Attentra Inc. All rights reserved.</span>
+            <div class="footer-status-pill"><span class="pulse-emerald"></span> Operational</div>
+          </div>
+        </footer>
+
+      </section>
+
+      <!-- ================= 2. CLIENT PORTAL VIEW ================= -->
+      <section id="view-client" class="view-panel">
+        <div class="dashboard-layout">
+          <!-- Client Sidebar Navigation -->
+          <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+              <i class="fa-solid fa-briefcase"></i> Client Hub
+            </div>
+            <ul class="sidebar-menu">
+              <li class="active-tab" data-tab="client-overview"><i class="fa-solid fa-chart-pie"></i> Overview</li>
+              <li data-tab="client-create"><i class="fa-solid fa-circle-plus"></i> Create Campaign</li>
+              <li data-tab="client-analytics"><i class="fa-solid fa-square-poll-vertical"></i> AI Insights & Reports</li>
+              
+              <!-- Scale additions -->
+              <li class="sidebar-divider">Settings & Scaling</li>
+              <li data-tab="client-apikeys"><i class="fa-solid fa-key"></i> API Keys & Webhooks</li>
+              <li data-tab="client-team"><i class="fa-solid fa-users-gear"></i> Team & Workspace</li>
+              <li data-tab="client-billing"><i class="fa-solid fa-credit-card"></i> Billing & Subscriptions</li>
+            </ul>
+            <div class="sidebar-footer-stat">
+              <div class="stat-label">Spent This Month</div>
+              <div class="stat-value">$1,420.00</div>
+            </div>
+          </aside>
+
+          <!-- Client Main Dashboard Content Panels -->
+          <div class="dashboard-content">
+            
+            <!-- CLIENT SUB-TAB: OVERVIEW -->
+            <div id="tab-client-overview" class="sub-tab active-sub-tab">
+              <div class="dashboard-title-row">
+                <h2>Business Dashboard</h2>
+                <span class="badge badge-purple"><i class="fa-solid fa-crown"></i> Attentra Premium Business</span>
+              </div>
+
+              <!-- Stats Grid -->
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-icon font-indigo"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                  <div class="stat-info">
+                    <h4>Active Campaigns</h4>
+                    <span class="value" id="client-active-camps-count">2</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon font-emerald"><i class="fa-solid fa-users"></i></div>
+                  <div class="stat-info">
+                    <h4>Total Insights Verified</h4>
+                    <span class="value">347</span>
+                  </div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-icon font-rose"><i class="fa-solid fa-ban"></i></div>
+                  <div class="stat-info">
+                    <h4>Fraud Reviews Blocked</h4>
+                    <span class="value" id="client-fraud-blocked-count">19</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Active Campaigns Table list -->
+              <div class="card glass-card table-card margin-top-lg">
+                <div class="card-header-row">
+                  <h3>Your Active Research Campaigns</h3>
+                  <button class="btn btn-secondary btn-sm" onclick="activateTab('client', 'client-create')"><i class="fa-solid fa-plus"></i> New Campaign</button>
+                </div>
+                <div class="table-container">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Campaign Title</th>
+                        <th>Type</th>
+                        <th>Audience Target</th>
+                        <th>Responses</th>
+                        <th>Budget</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="client-campaigns-table">
+                      <!-- Populated dynamically by client.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- CLIENT SUB-TAB: CREATE CAMPAIGN WIZARD -->
+            <div id="tab-client-create" class="sub-tab">
+              <div class="wizard-container">
+                <h2>Launch A Human Intelligence Campaign</h2>
+                
+                <!-- Wizard Stepper Indicator -->
+                <div class="stepper">
+                  <div class="step active" data-step="1">
+                    <span class="step-num">1</span>
+                    <span class="step-text">Type & Content</span>
+                  </div>
+                  <div class="step" data-step="2">
+                    <span class="step-num">2</span>
+                    <span class="step-text">Target Audience</span>
+                  </div>
+                  <div class="step" data-step="3">
+                    <span class="step-num">3</span>
+                    <span class="step-text">Pricing & Launch</span>
+                  </div>
+                </div>
+
+                <!-- Wizard Steps forms -->
+                <div class="wizard-form-box">
+                  <!-- STEP 1 -->
+                  <div class="wizard-step-panel active-step-panel" id="wizard-step-1">
+                    <h3>Select Campaign Type & Upload Assets</h3>
+                    <div class="type-cards-grid">
+                      <label class="type-card-label">
+                        <input type="radio" name="camp-type" value="video" checked class="hidden-radio">
+                        <div class="type-card">
+                          <i class="fa-solid fa-circle-play"></i>
+                          <h4>Video Retention Review</h4>
+                          <p>Identify drop-off points, thumbnail feedback, content clarity, and visual pacing.</p>
+                        </div>
+                      </label>
+                      <label class="type-card-label">
+                        <input type="radio" name="camp-type" value="website" class="hidden-radio">
+                        <div class="type-card">
+                          <i class="fa-solid fa-window-restore"></i>
+                          <h4>UI/UX Usability Clickmap</h4>
+                          <p>Upload a prototype layout/screenshot and map confusion coordinates and usability friction.</p>
+                        </div>
+                      </label>
+                      <label class="type-card-label">
+                        <input type="radio" name="camp-type" value="thumbnail" class="hidden-radio">
+                        <div class="type-card">
+                          <i class="fa-solid fa-images"></i>
+                          <h4>Thumbnail/Logo A/B Comparison</h4>
+                          <p>Compare two options side-by-side with target audiences voting and justifying preference.</p>
+                        </div>
+                      </label>
+                    </div>
+
+                    <div class="form-group margin-top-lg">
+                      <label for="camp-title">Campaign Title / Project Name</label>
+                      <input type="text" id="camp-title" placeholder="e.g. YouTube Video Thumbnail A/B Test" class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="camp-url">Content URL or Asset Link (e.g. YouTube URL, Mockup Figma Link, or Image file name)</label>
+                      <input type="text" id="camp-url" placeholder="https://youtube.com/... or https://figma.com/..." class="form-input">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="camp-instructions">Instructions for Human Reviewers</label>
+                      <textarea id="camp-instructions" rows="4" placeholder="What specific feedback do you need? (e.g. Explain if the hook at the start makes you curious, or pinpoint elements on the page that confuse you)" class="form-input"></textarea>
+                    </div>
+
+                    <div class="wizard-actions">
+                      <button class="btn btn-primary" onclick="wizardNext(2)">Next: Define Target Audience <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                  </div>
+
+                  <!-- STEP 2 -->
+                  <div class="wizard-step-panel" id="wizard-step-2">
+                    <h3>Configure Advanced Audience Filters</h3>
+                    <p class="muted margin-bottom-md">Only reviewers matching these filters will be allowed to accept your campaign. Our fraud system blocks general users trying to spoof expert demographics.</p>
+                    
+                    <div class="grid-2">
+                      <div class="form-group">
+                        <label for="target-geo">Geographic Location</label>
+                        <select id="target-geo" class="form-input">
+                          <option value="Global">Global Reach</option>
+                          <option value="US/Canada">North America (US & Canada)</option>
+                          <option value="Europe">Europe (UK, Germany, France)</option>
+                          <option value="Asia">Asia Pacific</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="target-occupation">Target Occupation / Profession</label>
+                        <select id="target-occupation" class="form-input">
+                          <option value="General">General Public (All professions)</option>
+                          <option value="Developers">Software Developers / Tech Specialists</option>
+                          <option value="Gamers">Gamers & Content Creators</option>
+                          <option value="Professionals">Corporate Professionals / Finance / Legal</option>
+                          <option value="Students">University Students</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="target-age">Age Cohort</label>
+                        <select id="target-age" class="form-input">
+                          <option value="Any">All Ages (18+)</option>
+                          <option value="18-24">Gen Z (18-24)</option>
+                          <option value="25-34">Young Professional (25-34)</option>
+                          <option value="35-54">Mid-Career (35-54)</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="target-device">Primary Interaction Device</label>
+                        <select id="target-device" class="form-input">
+                          <option value="Any">Any Device</option>
+                          <option value="Mobile">Mobile Only (iOS/Android)</option>
+                          <option value="Desktop">Desktop Browser</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="wizard-actions">
+                      <button class="btn btn-secondary" onclick="wizardBack(1)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                      <button class="btn btn-primary" onclick="wizardNext(3)">Next: Budget & Payouts <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                  </div>
+
+                  <!-- STEP 3 -->
+                  <div class="wizard-step-panel" id="wizard-step-3">
+                    <h3>Budget, Pricing, and Match Estimations</h3>
+                    
+                    <div class="budget-calculations-box">
+                      <div class="calc-row">
+                        <span>Target Reviewer Earning Rate:</span>
+                        <strong class="text-success" id="wizard-payout-rate">$2.50 / Review</strong>
+                      </div>
+                      <div class="calc-row">
+                        <span>Attentra Verification & Quality Audit Fee:</span>
+                        <span>$0.50 / Review</span>
+                      </div>
+                      <div class="calc-row highlighted-row">
+                        <span>Total Price Per Verified Insight:</span>
+                        <strong class="text-indigo" id="wizard-cost-per-review">$3.00</strong>
+                      </div>
+                    </div>
+
+                    <div class="form-group margin-top-md">
+                      <label for="wizard-sample-size">Desired Number of Insights (Responses): <span id="wizard-sample-val" class="highlight-val">50</span></label>
+                      <input type="range" id="wizard-sample-size" min="10" max="300" step="5" value="50" class="styled-slider" oninput="updateWizardBudget()">
+                    </div>
+
+                    <div class="est-reach-bar">
+                      <div class="reach-label">Estimated matching platform reviewers online: <strong class="text-emerald" id="wizard-online-match">1,402</strong></div>
+                      <div class="reach-bar-outer"><div class="reach-bar-inner" style="width: 80%"></div></div>
+                    </div>
+
+                    <div class="launch-summary-card">
+                      <div class="summary-total-label">Total Campaign Budget</div>
+                      <div class="summary-total-val" id="wizard-total-budget">$150.00</div>
+                      <p class="muted">Payments will be escrowed and only released for reviews that pass the AI Quality Scan.</p>
+                    </div>
+
+                    <div class="wizard-actions">
+                      <button class="btn btn-secondary" onclick="wizardBack(2)"><i class="fa-solid fa-arrow-left"></i> Back</button>
+                      <button class="btn btn-primary" id="wizard-launch-btn"><i class="fa-solid fa-circle-check"></i> Escrow Funds & Launch Campaign</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CLIENT SUB-TAB: AI INSIGHTS & ANALYTICS REPORTS -->
+            <div id="tab-client-analytics" class="sub-tab">
+              <div class="analytics-header">
+                <div>
+                  <h2 id="analytics-campaign-title">YouTube Video Hook Retention</h2>
+                  <p class="muted">Campaign Type: <strong id="analytics-campaign-type">Video</strong> | Target: <strong id="analytics-campaign-target">Developers</strong></p>
+                </div>
+                <div class="analytics-actions">
+                  <select id="analytics-campaign-selector" class="styled-select-sm">
+                    <!-- Loaded dynamically -->
+                  </select>
+                  <button class="btn btn-secondary btn-sm" onclick="exportAnalyticsReport()"><i class="fa-solid fa-file-export"></i> Export Report</button>
+                </div>
+              </div>
+
+              <!-- General Analytics Breakdown -->
+              <div class="grid-3 margin-top-md">
+                <div class="card glass-card text-center">
+                  <h4>Attention Score</h4>
+                  <div class="radial-score-large font-indigo" id="analytics-attention-score">84%</div>
+                  <p class="small text-muted">User focus consistency during the tasks</p>
+                </div>
+                <div class="card glass-card text-center">
+                  <h4>Overall Net Sentiment</h4>
+                  <div class="radial-score-large font-emerald" id="analytics-sentiment-label">Positive</div>
+                  <p class="small text-muted">AI parsed sentiment from all written feedback</p>
+                </div>
+                <div class="card glass-card text-center">
+                  <h4>Sample Coverage</h4>
+                  <div class="radial-score-large font-pink" id="analytics-sample-coverage">42 / 50</div>
+                  <p class="small text-muted">Escrowed responses successfully processed</p>
+                </div>
+              </div>
+
+              <!-- INTERACTIVE PLOTS: VIDEO RETENTION CHART & TIMESTAMP COMMENTS -->
+              <div id="analytics-type-video-container" class="analytics-widget-row grid-2-1 margin-top-lg">
+                <div class="card glass-card chart-card">
+                  <h3>Interactive Retention Timeline</h3>
+                  <p class="muted small">Hover along the chart lines to discover exactly where and why viewers lost attention.</p>
+                  <div class="chart-container-inner">
+                    <canvas id="retentionChartCanvas"></canvas>
+                  </div>
+                </div>
+
+                <div class="card glass-card list-card">
+                  <h3>Second-by-Second Feedback</h3>
+                  <p class="muted small">Click points on the timeline to filter specific timestamps.</p>
+                  <ul id="retention-comments-list" class="sentiment-feedback-list">
+                    <!-- Populated dynamically on hover/click of chart -->
+                  </ul>
+                </div>
+              </div>
+
+              <!-- MOCKUP CLICKMAP / HEATMAP CONTAINER -->
+              <div id="analytics-type-website-container" class="analytics-widget-row margin-top-lg hidden">
+                <div class="grid-2-1">
+                  <div class="card glass-card clickmap-card">
+                    <h3>UI click Hotspots & Friction Map</h3>
+                    <p class="muted small">Visual layout coordinates where users expressed confusion or difficulty clicking.</p>
+                    <div class="clickmap-wrapper">
+                      <img src="" id="clickmap-mock-bg" class="clickmap-bg" alt="UI screenshot under test">
+                      <canvas id="clickmapCanvas" class="clickmap-overlay-canvas"></canvas>
+                    </div>
+                  </div>
+                  <div class="card glass-card clicked-coordinates-list">
+                    <h3>Click Coordinate Remarks</h3>
+                    <p class="muted small">Selected coordinates and corresponding reviewer feedback.</p>
+                    <ul id="click-coordinates-remarks-list" class="sentiment-feedback-list">
+                      <!-- Populated dynamically -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- THUMBNAIL A/B VOTING CHART -->
+              <div id="analytics-type-thumbnail-container" class="analytics-widget-row margin-top-lg hidden">
+                <div class="grid-2">
+                  <div class="card glass-card text-center">
+                    <h3>A/B Preference Split</h3>
+                    <div class="comparison-bar-chart">
+                      <div class="bar-a" style="width: 65%"><span class="bar-percent">Thumbnail A (65%)</span></div>
+                      <div class="bar-b" style="width: 35%"><span class="bar-percent">Thumbnail B (35%)</span></div>
+                    </div>
+                    <div class="comparison-images-wrapper">
+                      <div class="comp-box-a">
+                        <h5>Option A</h5>
+                        <img src="" id="comparison-img-a" class="comp-img-thumb" alt="Thumbnail A">
+                      </div>
+                      <div class="comp-box-b">
+                        <h5>Option B</h5>
+                        <img src="" id="comparison-img-b" class="comp-img-thumb" alt="Thumbnail B">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card glass-card">
+                    <h3>Why Option A Won: Semantic Analysis</h3>
+                    <div class="sentiment-bar-pair">
+                      <span>Perceived Trustworthiness</span>
+                      <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 82%"></div></div>
+                    </div>
+                    <div class="sentiment-bar-pair">
+                      <span>Click Incentive (Intrigue)</span>
+                      <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 76%"></div></div>
+                    </div>
+                    <div class="sentiment-bar-pair">
+                      <span>Text Legibility</span>
+                      <div class="progress-bar-container"><div class="progress-bar-fill" style="width: 90%"></div></div>
+                    </div>
+                    <h4 class="margin-top-md">Top Reason Comments</h4>
+                    <ul id="thumbnail-reasons-list" class="sentiment-feedback-list">
+                      <!-- Loaded dynamically -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Summary and recommendations -->
+              <div class="card glass-card margin-top-lg">
+                <h3><i class="fa-solid fa-wand-magic-sparkles text-indigo"></i> Attentra AI Insights Report Summary</h3>
+                <div class="ai-summary-grid">
+                  <div class="ai-box">
+                    <h5 class="text-emerald"><i class="fa-solid fa-thumbs-up"></i> Core Positives</h5>
+                    <p id="ai-positives-summary">The intro hook succeeds at matching high-interest triggers for tech audiences.</p>
+                  </div>
+                  <div class="ai-box">
+                    <h5 class="text-rose"><i class="fa-solid fa-triangle-exclamation"></i> Identified Pain Points</h5>
+                    <p id="ai-negatives-summary">Massive retention drop-off occurs between 0:25 and 0:42.</p>
+                  </div>
+                </div>
+
+                <h4 class="margin-top-md">Priority Action Items</h4>
+                <div class="table-container">
+                  <table class="action-items-table">
+                    <thead>
+                      <tr>
+                        <th>Recommended Fix</th>
+                        <th>Target Area</th>
+                        <th>Impact / Priority</th>
+                        <th>Estimated Improvement</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ai-action-items-table">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- CLIENT SUB-TAB: API KEYS & WEBHOOK CONFIGS -->
+            <div id="tab-client-apikeys" class="sub-tab">
+              <h2>Developer API Keys & Webhooks Manager</h2>
+              <p class="muted margin-bottom-md">Trigger campaigns programmatically and stream insights directly into your workflow.</p>
+              
+              <div class="grid-2">
+                <div class="card glass-card">
+                  <h3>Active API Secret Credentials</h3>
+                  <div class="form-group margin-top-md">
+                    <label>Generate API Token:</label>
+                    <div class="flex-input-row">
+                      <input type="text" id="api-key-display-field" class="form-input fira-code font-indigo" value="sec_att_live83h28sdj7193j..." readonly>
+                      <button class="btn btn-primary btn-sm" id="btn-generate-apikey"><i class="fa-solid fa-rotate"></i> Roll Key</button>
+                    </div>
+                  </div>
+                  <p class="small text-muted">Use this token as a Bearer authorization token in REST integrations headers.</p>
+                </div>
+
+                <div class="card glass-card">
+                  <h3>Webhooks Payload Stream</h3>
+                  <div class="form-group margin-top-md">
+                    <label>Webhook Listener URL Endpoint:</label>
+                    <input type="text" id="webhook-url-input" class="form-input" placeholder="https://api.yourdomain.com/attentra-receiver">
+                  </div>
+                  <div class="wizard-actions" style="margin-top:0.5rem; padding-top:0.5rem; border-top:none;">
+                    <button class="btn btn-secondary btn-sm" id="btn-send-webhook-test"><i class="fa-solid fa-paper-plane"></i> Send Test Event</button>
+                    <button class="btn btn-primary btn-sm" id="btn-save-webhook"><i class="fa-solid fa-save"></i> Save URL</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CLIENT SUB-TAB: TEAM & RBAC MANAGEMENT -->
+            <div id="tab-client-team" class="sub-tab">
+              <h2>Organization Workspace & Team Members</h2>
+              <p class="muted margin-bottom-md">Collaborate across campaigns, design tests, and AI insights with custom Role-Based Access Control.</p>
+              
+              <div class="card glass-card table-card">
+                <div class="card-header-row">
+                  <h3>Workspace Access Roster</h3>
+                  <div class="flex-input-row" style="gap:10px;">
+                    <input type="email" id="invite-email-input" class="form-input form-input-sm" placeholder="collaborator@company.com" style="max-width:240px;">
+                    <select id="invite-role-input" class="styled-select-sm">
+                      <option value="Analyst">Analyst (View & Create)</option>
+                      <option value="Admin">Admin (Full Control)</option>
+                      <option value="Viewer">Viewer (Read-Only)</option>
+                    </select>
+                    <button class="btn btn-primary btn-sm" id="btn-invite-team"><i class="fa-solid fa-user-plus"></i> Invite</button>
+                  </div>
+                </div>
+                <div class="table-container">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Collaborator Email</th>
+                        <th>Workspace Role</th>
+                        <th>Invite Status</th>
+                        <th>Joined Date</th>
+                      </tr>
+                    </thead>
+                    <tbody id="client-team-roster-table">
+                      <!-- Loaded dynamically by client.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- CLIENT SUB-TAB: BILLING & SUBSCRIPTIONS -->
+            <div id="tab-client-billing" class="sub-tab">
+              <h2>Billing & Workspace Subscriptions</h2>
+              <p class="muted margin-bottom-md">Manage payment profiles, update credit cards, toggle plan tiers, and download invoice histories.</p>
+              
+              <div class="grid-2">
+                <div class="card glass-card">
+                  <h3>Current Subscription Tier</h3>
+                  <div class="radial-score-large font-indigo" style="font-size:2rem; margin-top:0.5rem;" id="active-billing-plan-label">Growth Plan</div>
+                  <p class="small text-muted margin-top-sm">Renewal Date: <strong>August 15, 2026 ($149.00/month)</strong></p>
+                  
+                  <div class="form-group margin-top-md">
+                    <label>Toggle Plan Tier:</label>
+                    <select id="billing-tier-selector" class="form-input" onchange="changeSubscriptionPlan()">
+                      <option value="Growth">Growth Plan ($149.00 / month)</option>
+                      <option value="Scale">Scale Plan ($499.00 / month)</option>
+                      <option value="Enterprise">Enterprise Plan (Custom / SLA)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="card glass-card">
+                  <h3>Escrow Account Balance</h3>
+                  <div class="radial-score-large font-emerald" style="font-size:2rem; margin-top:0.5rem;">$1,080.00</div>
+                  <p class="small text-muted margin-top-sm">Funds pre-deposited to match campaign tester requirements instantly.</p>
+                  <button class="btn btn-primary btn-sm margin-top-md" onclick="showToast('Escrow Funded', '+$500.00 escrow pre-deposited successfully.', 'success')">
+                    <i class="fa-solid fa-wallet"></i> Top-Up Escrow Funds
+                  </button>
+                </div>
+              </div>
+
+              <div class="card glass-card table-card margin-top-lg">
+                <div class="card-header-row">
+                  <h3>Invoice Payment History</h3>
+                </div>
+                <div class="table-container">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Invoice ID</th>
+                        <th>Billing Period</th>
+                        <th>Amount Paid</th>
+                        <th>Payment Status</th>
+                        <th>Receipt Download</th>
+                      </tr>
+                    </thead>
+                    <tbody id="client-billing-invoices-table">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. REVIEWER PORTAL VIEW ================= -->
+      <section id="view-reviewer" class="view-panel">
+        <div class="dashboard-layout">
+          <!-- Reviewer Sidebar Navigation -->
+          <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+              <i class="fa-solid fa-user-check"></i> Reviewer Hub
+            </div>
+            <ul class="sidebar-menu">
+              <li class="active-tab" data-tab="reviewer-profile"><i class="fa-solid fa-id-card"></i> Profile & Reputation</li>
+              <li data-tab="reviewer-tasks" id="reviewer-find-jobs-tab"><i class="fa-solid fa-clipboard-list"></i> Available Projects</li>
+              <li data-tab="reviewer-sandbox" id="reviewer-workspace-tab" class="hidden-tab-nav"><i class="fa-solid fa-keyboard"></i> Active Workspace</li>
+            </ul>
+            <div class="sidebar-footer-stat">
+              <div class="stat-label">Total Earnings</div>
+              <div class="stat-value" id="reviewer-sidebar-earnings">$145.50</div>
+            </div>
+          </aside>
+
+          <!-- Reviewer Main Dashboard Content Panels -->
+          <div class="dashboard-content">
+
+            <!-- REVIEWER SUB-TAB: PROFILE & REPUTATION -->
+            <div id="tab-reviewer-profile" class="sub-tab active-sub-tab">
+              <h2>Reviewer Performance Scorecard</h2>
+              <p class="muted">Your reputational health is recalculating in real-time. High grades unlock high-tier specialized corporate campaigns.</p>
+              
+              <!-- Reputation Metrics Grid -->
+              <div class="reputation-grid">
+                <div class="rep-card">
+                  <h3>Reputation Score</h3>
+                  <div class="rep-circle-container">
+                    <svg viewBox="0 0 100 100" class="rep-progress-svg">
+                      <circle cx="50" cy="50" r="40" class="bg-circle"></circle>
+                      <circle cx="50" cy="50" r="40" class="fill-circle" id="rep-score-ring" style="stroke-dashoffset: 4;"></circle>
+                    </svg>
+                    <div class="rep-score-number"><span id="profile-rep-score">98.4</span>%</div>
+                  </div>
+                  <div class="rep-meta-footer text-emerald">Tier: <strong class="glow-text">Elite Analyst</strong></div>
+                </div>
+
+                <div class="rep-stats-details">
+                  <div class="card glass-card stat-sub-card">
+                    <h4>Accuracy Metric</h4>
+                    <div class="metric-row">
+                      <span class="muted">Feedback Quality Grade</span>
+                      <strong class="text-indigo">A+ (High detail)</strong>
+                    </div>
+                    <div class="metric-row">
+                      <span class="muted">Semantic spam scores</span>
+                      <strong class="text-success">0.2% Low-Quality Triggered</strong>
+                    </div>
+                  </div>
+
+                  <div class="card glass-card stat-sub-card margin-top-sm">
+                    <h4>Engagement Score</h4>
+                    <div class="metric-row">
+                      <span class="muted">Focus retention efficiency</span>
+                      <strong class="text-emerald">99.1% Active Focus</strong>
+                    </div>
+                    <div class="metric-row">
+                      <span class="muted">Timeliness index</span>
+                      <strong class="text-success">Excellent (Avg. 12 mins completion)</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Profile Badges -->
+              <div class="card glass-card margin-top-lg">
+                <h3>Verified Badges & Demographic Targeting Tags</h3>
+                <p class="muted small">These categories allow you to automatically match targeted marketing tests.</p>
+                <div class="badges-flex margin-top-sm" id="reviewer-badges-list">
+                  <!-- Loaded dynamically by reviewer.js -->
+                </div>
+              </div>
+
+              <!-- Review History log -->
+              <div class="card glass-card margin-top-lg">
+                <h3>Recent Completed Reviews History</h3>
+                <div class="table-container">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Date completed</th>
+                        <th>Project Campaign</th>
+                        <th>Payout Earning</th>
+                        <th>AI Quality Grade</th>
+                        <th>Verification Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reviewer-history-table">
+                      <!-- Loaded dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- REVIEWER SUB-TAB: AVAILABLE PROJECTS LIST -->
+            <div id="tab-reviewer-tasks" class="sub-tab">
+              <h2>Matched Campaign Opportunities</h2>
+              <p class="muted margin-bottom-md">These studies are open to your specific occupation, location, and hardware device profile. Your payout is escrowed upon matching.</p>
+              
+              <div class="campaign-grid" id="reviewer-available-tasks-list">
+                <!-- Dynamically loaded with match percentages -->
+              </div>
+            </div>
+
+            <!-- REVIEWER SUB-TAB: ACTIVE WORKSPACE (TASK ROOM) -->
+            <div id="tab-reviewer-sandbox" class="sub-tab">
+              <!-- Header task details -->
+              <div class="workspace-header card glass-card">
+                <div class="header-main-details">
+                  <span class="badge badge-purple" id="task-badge-type">Video Project</span>
+                  <h2 id="task-detail-title">Video Feedback Task</h2>
+                  <p class="muted small" id="task-detail-instructions">Watch the video below and write timestamped feedback comments pointing out confusion, visual pacing, or design elements.</p>
+                </div>
+                <div class="header-payout-box">
+                  <div class="earnings-label">Task Reward (Escrowed)</div>
+                  <div class="earnings-value text-success" id="task-detail-payout">$2.50</div>
+                </div>
+              </div>
+
+              <!-- Active Task workspace area -->
+              <div class="task-sandbox-container margin-top-md">
+
+                <!-- 1. VIDEO WORKSPACE -->
+                <div id="workspace-type-video" class="workspace-type-panel">
+                  <div class="grid-2-1">
+                    <!-- Mock Video Player Frame -->
+                    <div class="card glass-card player-frame">
+                      <div class="mock-video-wrapper">
+                        <video id="reviewer-video-player" controls preload="metadata">
+                          <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4">
+                          Your browser does not support HTML5 video player.
+                        </video>
+                        <div class="video-overlay-attention-dot" id="attention-dot"></div>
+                      </div>
+                      <div class="video-helper-pills">
+                        <span><i class="fa-solid fa-play"></i> Watch normally</span>
+                        <span><i class="fa-solid fa-pause"></i> Pause to log note</span>
+                        <span id="player-time-badge" class="badge badge-indigo">00:00</span>
+                      </div>
+                    </div>
+
+                    <!-- Feedback logs creator -->
+                    <div class="card glass-card feedback-input-container">
+                      <h3>Add Timestamped Comments</h3>
+                      <p class="muted small">Write comments explaining your experience (minimum 3 comments for full payout eligibility).</p>
+                      
+                      <div class="comment-wizard-field">
+                        <div class="timestamp-stamp" id="current-comment-timestamp">@ 0:00</div>
+                        <textarea id="reviewer-video-comment-input" rows="3" placeholder="Explain what you thought here. (e.g. 'Intro is funny' or 'Chart was hard to read...')" class="form-input"></textarea>
+                        <button class="btn btn-indigo btn-sm margin-top-sm" id="add-video-comment-btn"><i class="fa-solid fa-plus"></i> Save Timestamp Comment</button>
+                      </div>
+
+                      <h4 class="margin-top-md">Your Comments List</h4>
+                      <ul id="reviewer-added-comments-list" class="added-comments-log">
+                        <!-- Loaded dynamically -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 2. WEBSITE USABILITY CLICKMAP WORKSPACE -->
+                <div id="workspace-type-website" class="workspace-type-panel hidden">
+                  <div class="grid-2-1">
+                    <div class="card glass-card usability-test-frame">
+                      <h3>Interactive Layout Feedback Canvas</h3>
+                      <p class="muted small">Click on the screenshot layout to place pins where you experience visual confusion, design friction, or branding issues.</p>
+                      
+                      <div class="usability-interactive-area" id="usability-interactive-area">
+                        <div class="usability-mockup-frame">
+                          <div class="mockup-header-bar">
+                            <span class="circle-btn"></span><span class="circle-btn"></span><span class="circle-btn"></span>
+                            <div class="mockup-url-bar">https://app.fintechlaunch.io/dashboard</div>
+                          </div>
+                          <div class="mockup-body-wrapper">
+                            <!-- Visual HTML Dashboard Simulation for user click testing -->
+                            <div class="mockup-dashboard-layout">
+                              <header class="mockup-dash-header">
+                                <div class="mockup-logo">🚀 FinTech</div>
+                                <div class="mockup-profile-pic"></div>
+                              </header>
+                              <div class="mockup-dash-grid">
+                                <div class="mockup-widget widget-hero">
+                                  <h3>Premium Portfolio Value</h3>
+                                  <div class="mockup-value">$48,200.00</div>
+                                  <div class="mockup-sparkline"></div>
+                                </div>
+                                <div class="mockup-widget">
+                                  <h3>Transactions</h3>
+                                  <div class="mockup-list-item"><span>Transfer Limit</span> <strong class="text-rose">Overdraft!</strong></div>
+                                  <div class="mockup-list-item"><span>Pending wire</span> <strong>$1,200</strong></div>
+                                </div>
+                                <div class="mockup-widget widget-actions-btn-group">
+                                  <button class="mockup-btn mockup-primary">Invest Now</button>
+                                  <button class="mockup-btn mockup-secondary">Cancel Request</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="usability-clickmap-pins-container"></div>
+                      </div>
+                    </div>
+
+                    <div class="card glass-card feedback-input-container">
+                      <h3>Target Pin Coordinates Remarks</h3>
+                      <p class="muted small">Click anywhere on the web design to drop a coordinate, then explain the usability bug or confusion there.</p>
+                      
+                      <div class="comment-wizard-field">
+                        <div class="timestamp-stamp" id="current-coordinate-stamp">Pin Coordinates: Select point...</div>
+                        <textarea id="reviewer-coordinate-comment-input" rows="3" placeholder="Explain what is wrong at this click point..." class="form-input" disabled></textarea>
+                        <button class="btn btn-indigo btn-sm margin-top-sm" id="add-coordinate-comment-btn" disabled><i class="fa-solid fa-thumbtack"></i> Add Pin Feedback</button>
+                      </div>
+
+                      <h4 class="margin-top-md">Logged Pin Remarks</h4>
+                      <ul id="reviewer-added-pins-list" class="added-comments-log">
+                        <!-- Loaded dynamically -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. THUMBNAIL A/B TEST WORKSPACE -->
+                <div id="workspace-type-thumbnail" class="workspace-type-panel hidden">
+                  <div class="card glass-card">
+                    <h3>Thumbnail/Logo Preference Selection</h3>
+                    <p class="muted small">Review option A and Option B closely. Cast your vote and write a detailed qualitative reason for your choice.</p>
+                    
+                    <div class="thumbnail-compare-flex margin-top-md">
+                      <label class="compare-selector-label">
+                        <input type="radio" name="thumbnail-vote" value="A" checked class="hidden-radio">
+                        <div class="compare-choice-box">
+                          <div class="choice-tag">Option A</div>
+                          <div class="choice-thumbnail-simulation img-sim-a">
+                            <div class="text-overlay">
+                              <span class="badge-accent">STRIPE SECRET</span>
+                              <h2>How we scaled to $100M ARR</h2>
+                            </div>
+                            <div class="avatar-overlay avatar-a"></div>
+                          </div>
+                        </div>
+                      </label>
+
+                      <label class="compare-selector-label">
+                        <input type="radio" name="thumbnail-vote" value="B" class="hidden-radio">
+                        <div class="compare-choice-box">
+                          <div class="choice-tag">Option B</div>
+                          <div class="choice-thumbnail-simulation img-sim-b">
+                            <div class="text-overlay">
+                              <span class="badge-accent bg-orange">FINANCIAL SECRETS</span>
+                              <h2>scaling $100M with code</h2>
+                            </div>
+                            <div class="avatar-overlay avatar-b"></div>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+
+                    <div class="form-group margin-top-lg">
+                      <label for="reviewer-thumbnail-comment-input">Explain why you selected this option. What visual elements make it look better or more trustworthy?</label>
+                      <textarea id="reviewer-thumbnail-comment-input" rows="4" placeholder="Be descriptive. Explain colors, fonts, facial expression, and layout contrast details..." class="form-input"></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SUBMIT ACTIONS BAR WITH FRAUD METRICS -->
+                <div class="card glass-card workspace-footer-card margin-top-md">
+                  <div class="workspace-fraud-indicators">
+                    <span class="indicator-pill text-success" id="indicator-focus"><i class="fa-solid fa-circle"></i> Active Focus Monitor</span>
+                    <span class="indicator-pill text-success" id="indicator-timer"><i class="fa-solid fa-stopwatch"></i> Pacing Verified</span>
+                    <span class="indicator-pill text-success" id="indicator-keystroke"><i class="fa-solid fa-keyboard"></i> Keystrokes Normal</span>
+                  </div>
+                  <button class="btn btn-primary btn-lg" id="submit-review-task-btn"><i class="fa-solid fa-paper-plane"></i> Submit Completed Insights</button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. ADMIN CONTROL VIEW ================= -->
+      <section id="view-admin" class="view-panel">
+        <div class="dashboard-layout">
+          <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+              <i class="fa-solid fa-shield-halved"></i> Security Center
+            </div>
+            <ul class="sidebar-menu">
+              <li class="active-tab" data-tab="admin-fraud"><i class="fa-solid fa-user-ninja"></i> Fraud Logs</li>
+              <li data-tab="admin-stats"><i class="fa-solid fa-server"></i> System Variables</li>
+            </ul>
+            <div class="sidebar-footer-stat">
+              <div class="stat-label">Security Incidents</div>
+              <div class="stat-value text-rose">843</div>
+            </div>
+          </aside>
+
+          <div class="dashboard-content">
+            <div id="tab-admin-fraud" class="sub-tab active-sub-tab">
+              <h2>Anti-Fraud Live Monitoring Log</h2>
+              <p class="muted">System-wide auditor intercepting automated bot behaviors, sybil attacks, copy-paste profiles, and speed-running surveyors.</p>
+
+              <div class="card glass-card table-card margin-top-md">
+                <div class="card-header-row">
+                  <h3>Real-Time Security Feed</h3>
+                  <button class="btn btn-secondary btn-sm" onclick="clearFraudLogs()"><i class="fa-solid fa-trash-can"></i> Clear Log Feed</button>
+                </div>
+                <div class="table-container">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th>Time logged</th>
+                        <th>Reviewer ID</th>
+                        <th>Trigger Flag</th>
+                        <th>Severity</th>
+                        <th>Audit Consequence</th>
+                        <th>Details</th>
+                      </tr>
+                    </thead>
+                    <tbody id="admin-fraud-logs-table">
+                      <!-- Populated dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-admin-stats" class="sub-tab">
+              <h2>Attentra Core Infrastructure Configurations</h2>
+              <p class="muted margin-bottom-md">Fine-tune matching thresholds and quality validation parameters.</p>
+              
+              <div class="grid-2">
+                <div class="card glass-card">
+                  <h3>Match Algorithm Adjustments</h3>
+                  <div class="form-group margin-top-md">
+                    <label>Minimum Reviewer Reputation Threshold (to view Pro projects)</label>
+                    <input type="number" value="95.0" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label>Platform Transaction Fee (%)</label>
+                    <input type="number" value="15" class="form-input">
+                  </div>
+                  <button class="btn btn-primary btn-sm">Update matching rules</button>
+                </div>
+
+                <div class="card glass-card">
+                  <h3>AI Validation Hyperparameters</h3>
+                  <div class="form-group margin-top-md">
+                    <label>Minimum character limit for written review</label>
+                    <input type="number" id="admin-min-chars" value="30" class="form-input">
+                  </div>
+                  <div class="form-group">
+                    <label>Spam Classifier sensitivity (1-100 threshold)</label>
+                    <input type="number" value="80" class="form-input">
+                  </div>
+                  <button class="btn btn-primary btn-sm" onclick="updateAdminParams()">Save validation configurations</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Central App Logic Scripts -->
+  <script src="js/mockData.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/client.js"></script>
+  <script src="js/reviewer.js"></script>
+</body>
+</html>
