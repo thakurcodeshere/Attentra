@@ -351,7 +351,7 @@ export default function LandingPage({ setView, showToast }) {
             </button>
           </div>
 
-          <div style={{ background: 'rgba(0,0,0,0.15)', borderRadius: '12px', padding: '1.5rem', minHeight: '260px' }}>
+          <div style={{ background: 'var(--bg-deep)', border: '1px solid var(--border-subtle)', borderRadius: '12px', padding: '1.5rem', minHeight: '260px' }}>
             {!analysisDone ? (
               <div className="demo-report-placeholder">
                 <i className="fa-solid fa-hourglass-start" style={{ fontSize: '2rem' }}></i>
@@ -549,7 +549,7 @@ export default function LandingPage({ setView, showToast }) {
                 className="form-input" 
                 value={roiAudience} 
                 onChange={(e) => setRoiAudience(Number(e.target.value))}
-                style={{ background: 'var(--bg-deep)', color: '#fff', border: '1px solid var(--border-subtle)', padding: '8px 12px', width: '100%', borderRadius: '6px' }}
+                style={{ background: 'var(--bg-deep)', color: 'var(--text-white)', border: '1px solid var(--border-subtle)', padding: '8px 12px', width: '100%', borderRadius: '6px' }}
               >
                 <option value="2.00">General Public ($2.00 / Review)</option>
                 <option value="6.00">Software Developers ($6.00 / Review)</option>
