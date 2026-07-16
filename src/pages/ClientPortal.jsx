@@ -45,6 +45,8 @@ export default function ClientPortal({ state, setState, showToast }) {
   const [wAge, setWAge] = useState('Any');
   const [wDevice, setWDevice] = useState('Any Device');
   const [wSampleSize, setWSampleSize] = useState(50);
+  const [wTitleError, setWTitleError] = useState(false);
+  const [wUrlError, setWUrlError] = useState(false);
 
   // Settings inputs
   const [inviteEmail, setInviteEmail] = useState('');
@@ -195,8 +197,22 @@ export default function ClientPortal({ state, setState, showToast }) {
 
   // Actions
   const handleLaunchCampaign = () => {
-    if (!wTitle || !wUrl) {
-      showToast('Fields Empty', 'Please provide a campaign title and asset link.', 'warning');
+    let hasError = false;
+    if (!wTitle) {
+      setWTitleError(true);
+      hasError = true;
+    } else {
+      setWTitleError(false);
+    }
+    if (!wUrl) {
+      setWUrlError(true);
+      hasError = true;
+    } else {
+      setWUrlError(false);
+    }
+
+    if (hasError) {
+      showToast('Validation Error', 'Please fill in all required highlighted fields.', 'warning');
       return;
     }
 
@@ -628,24 +644,32 @@ export default function ClientPortal({ state, setState, showToast }) {
               {wizardStep === 1 && (
                 <div className="wizard-step-panel active-step-panel">
                   <div className="wizard-form-group">
-                    <label>Campaign Title</label>
+                    <label>Campaign Title <span style={{ color: 'var(--rose)' }}>*</span></label>
                     <input
                       type="text"
-                      className="wizard-input"
+                      className={`wizard-input ${wTitleError ? 'invalid' : wTitle ? 'valid' : ''}`}
                       placeholder="e.g. Fintech Dashboard Usability Mapping"
                       value={wTitle}
-                      onChange={(e) => setWTitle(e.target.value)}
+                      onChange={(e) => {
+                        setWTitle(e.target.value);
+                        if (e.target.value) setWTitleError(false);
+                      }}
                     />
+                    {wTitleError && <span className="input-error-msg"><i className="fa-solid fa-circle-exclamation"></i> Campaign Title is required</span>}
                   </div>
                   <div className="wizard-form-group">
-                    <label>Asset URL Link</label>
+                    <label>Asset URL Link <span style={{ color: 'var(--rose)' }}>*</span></label>
                     <input
                       type="text"
-                      className="wizard-input"
+                      className={`wizard-input ${wUrlError ? 'invalid' : wUrl ? 'valid' : ''}`}
                       placeholder="e.g. https://commondatastorage.googleapis.com/...mp4"
                       value={wUrl}
-                      onChange={(e) => setWUrl(e.target.value)}
+                      onChange={(e) => {
+                        setWUrl(e.target.value);
+                        if (e.target.value) setWUrlError(false);
+                      }}
                     />
+                    {wUrlError && <span className="input-error-msg"><i className="fa-solid fa-circle-exclamation"></i> Asset URL Link is required</span>}
                   </div>
                   <div className="wizard-form-group">
                     <label>Campaign Type</label>

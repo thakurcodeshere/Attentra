@@ -39,6 +39,7 @@ function ReviewerScoreRing({ value, max = 100, color = 'var(--primary)', size = 
 export default function ReviewerPortal({ state, setState, showToast }) {
   const [activeTab, setActiveTab] = useState('reviewer-tasks');
   const [activeTaskId, setActiveTaskId] = useState(null);
+  const [loadingTask, setLoadingTask] = useState(false);
   
   // Active sandbox states
   const [sandboxTime, setSandboxTime] = useState(0);
@@ -84,6 +85,7 @@ export default function ReviewerPortal({ state, setState, showToast }) {
   }, [activeTaskId, activeTab, setState, showToast]);
 
   const handleAcceptTask = (taskId) => {
+    setLoadingTask(true);
     setActiveTaskId(taskId);
     setSandboxTime(0);
     setCommentText('');
@@ -94,7 +96,10 @@ export default function ReviewerPortal({ state, setState, showToast }) {
     keystrokeTimes.current = [];
     
     setActiveTab('reviewer-sandbox');
-    showToast('Task Accepted', 'Fraud engines monitoring telemetry. Begin audit.', 'success');
+    setTimeout(() => {
+      setLoadingTask(false);
+      showToast('Task Accepted', 'Spam monitors configured. Telemetry stream open.', 'success');
+    }, 900);
   };
 
   const handleKeyPress = () => {
@@ -497,6 +502,32 @@ export default function ReviewerPortal({ state, setState, showToast }) {
         {/* ACTIVE WORKSPACE SANDBOX */}
         {activeTab === 'reviewer-sandbox' && activeTask && (
           <div className="sub-tab active-sub-tab">
+            {loadingTask ? (
+              <div className="sandbox-skeleton-wrapper">
+                <div className="grid-2-1">
+                  <div>
+                    {/* Skeleton Video Player */}
+                    <div className="card skeleton-box" style={{ height: '350px', marginBottom: '1.5rem', borderRadius: '12px' }}></div>
+                    {/* Skeleton Form Field */}
+                    <div className="card" style={{ padding: '2rem' }}>
+                      <div className="skeleton-box" style={{ height: '20px', width: '30%', marginBottom: '1rem', borderRadius: '4px' }}></div>
+                      <div className="skeleton-box" style={{ height: '80px', width: '100%', marginBottom: '1.5rem', borderRadius: '8px' }}></div>
+                      <div className="skeleton-box" style={{ height: '40px', width: '20%', borderRadius: '6px' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    {/* Skeleton Sidebar Panel */}
+                    <div className="card" style={{ height: '490px', padding: '1.5rem' }}>
+                      <div className="skeleton-box" style={{ height: '24px', width: '60%', marginBottom: '1.5rem', borderRadius: '4px' }}></div>
+                      <div className="skeleton-box" style={{ height: '45px', width: '100%', marginBottom: '1rem', borderRadius: '6px' }}></div>
+                      <div className="skeleton-box" style={{ height: '45px', width: '100%', marginBottom: '1rem', borderRadius: '6px' }}></div>
+                      <div className="skeleton-box" style={{ height: '45px', width: '100%', marginBottom: '1rem', borderRadius: '6px' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <>
             
             {/* Video Task workspace */}
             {activeTask.type === 'video' && (
@@ -721,6 +752,8 @@ export default function ReviewerPortal({ state, setState, showToast }) {
                 </button>
               </div>
             </div>
+            </>
+          )}
           </div>
         )}
 

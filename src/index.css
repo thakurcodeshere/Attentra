@@ -4682,7 +4682,7 @@ html[data-theme="sunset"] .bg-glow {
   100% { transform: translate(2vw, -5vw) scale(1); }
 }
 
-/* 7. Input focus premium elevations */
+/* 7. Input focus premium elevations & states */
 .wizard-input:focus, .admin-search-input:focus, .form-input:focus, .newsletter-input-box input:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px var(--primary-glow), var(--shadow-glow);
@@ -4690,5 +4690,56 @@ html[data-theme="sunset"] .bg-glow {
 }
 .wizard-input, .admin-search-input, .form-input, .newsletter-input-box input {
   transition: var(--transition-fast);
+}
+
+.wizard-input.invalid {
+  border-color: var(--rose) !important;
+  box-shadow: 0 0 0 3px var(--rose-glow) !important;
+}
+
+.wizard-input.valid {
+  border-color: var(--emerald) !important;
+  box-shadow: 0 0 0 3px var(--emerald-glow) !important;
+}
+
+.input-error-msg {
+  color: var(--rose);
+  font-size: 0.72rem;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: fadeIn 0.2s ease;
+}
+
+/* 8. Skeleton Box shimmer animation values */
+.skeleton-box {
+  background: var(--bg-surface);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.skeleton-box::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 1.6s infinite;
+}
+
+html[data-theme="light"] .skeleton-box::after {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.04), transparent);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
