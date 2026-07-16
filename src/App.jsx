@@ -77,10 +77,8 @@ export default function App() {
       {/* GLOBAL NAVBAR */}
       <header className="global-navbar">
         <div className="navbar-logo" onClick={() => handleRoleChange('landing')}>
-          <div className="logo-circle">
-            <i className="fa-solid fa-signature"></i>
-          </div>
-          Attentra
+          <span style={{ color: 'var(--primary)' }}>Att</span>
+          <span style={{ color: 'var(--orange)' }}>entra</span>
         </div>
 
         <nav className="navbar-menu-links">
