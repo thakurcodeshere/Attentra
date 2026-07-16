@@ -2,6 +2,40 @@ import { useState, useEffect, useRef } from 'react';
 
 const getNowTimestamp = () => new Date().getTime();
 
+// Animated Score Ring component
+function ReviewerScoreRing({ value, max = 100, color = 'var(--primary)', size = 130, label = 'Score' }) {
+  const radius = 48;
+  const circumference = 2 * Math.PI * radius;
+  const percent = Math.min(value / max, 1);
+  const offset = circumference - (percent * circumference);
+
+  return (
+    <div className="reviewer-score-ring" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id={`ring-grad-${label}`} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={color} />
+            <stop offset="100%" stopColor="var(--pink)" />
+          </linearGradient>
+        </defs>
+        <circle className="ring-bg" cx="60" cy="60" r={radius} strokeWidth="7" />
+        <circle
+          className="ring-value-animated"
+          cx="60" cy="60" r={radius}
+          strokeWidth="7"
+          stroke={`url(#ring-grad-${label})`}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+        />
+      </svg>
+      <div className="ring-center-text">
+        <span className="ring-val">{value}{max === 100 ? '%' : ''}</span>
+        <span className="ring-label">{label}</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ReviewerPortal({ state, setState, showToast }) {
   const [activeTab, setActiveTab] = useState('reviewer-tasks');
   const [activeTaskId, setActiveTaskId] = useState(null);
@@ -226,6 +260,32 @@ export default function ReviewerPortal({ state, setState, showToast }) {
     setActiveTab('reviewer-tasks');
   };
 
+  // Tab-specific headers
+  const tabTitles = {
+    'reviewer-tasks': { title: 'Available Audit Tasks', subtitle: 'Browse and accept high-paying review tasks matched to your expertise', crumb: 'Task Feed' },
+    'reviewer-sandbox': { title: 'Active Telemetry Sandbox', subtitle: `Auditing: ${activeTask?.title || 'No active task'}`, crumb: 'Workspace' },
+    'reviewer-profile': { title: 'Reputation & Profile', subtitle: 'Your integrity metrics, achievements, and auditor credentials', crumb: 'Profile' },
+  };
+
+  const currentHeader = tabTitles[activeTab] || tabTitles['reviewer-tasks'];
+
+  // Helper: get task icon
+  const getTaskIcon = (type) => {
+    if (type === 'video') return 'fa-circle-play';
+    if (type === 'website') return 'fa-window-restore';
+    return 'fa-images';
+  };
+
+  // Helper: get gradient class for task type
+  const getTaskGradientClass = (type) => {
+    if (type === 'video') return 'task-gradient-violet';
+    if (type === 'website') return 'task-gradient-cyan';
+    return 'task-gradient-amber';
+  };
+
+  const availableTasks = state.campaigns
+    .filter(c => c.status === 'active' && !state.currentUser.completedCampaigns.includes(c.id));
+
   return (
     <div className="dashboard-layout">
       {/* SIDEBAR */}
@@ -258,70 +318,178 @@ export default function ReviewerPortal({ state, setState, showToast }) {
           </ul>
         </div>
 
-        <div className="sidebar-footer-stat">
-          <div className="small muted">Auditor Wallet</div>
-          <h4 className="text-success" id="reviewer-sidebar-earnings" style={{ fontSize: '1.25rem', marginTop: '3px' }}>
+        {/* Sidebar Wallet Card */}
+        <div className="reviewer-sidebar-wallet">
+          <div className="wallet-glow-orb"></div>
+          <div className="wallet-label">
+            <i className="fa-solid fa-wallet"></i> Auditor Wallet
+          </div>
+          <h4 className="wallet-amount" id="reviewer-sidebar-earnings">
             ${state.currentUser.balance.toFixed(2)}
           </h4>
+          <div className="wallet-subtext">
+            <span className="wallet-rep-dot"></span>
+            Rep: {state.currentUser.reputation}%
+          </div>
         </div>
       </aside>
 
       {/* VIEW PANEL */}
-      <div style={{ flex: 1, padding: '2rem', overflowY: 'auto' }}>
+      <div style={{ flex: 1, padding: '0 2rem 2rem 2rem', overflowY: 'auto' }}>
         
+        {/* UNIVERSAL PAGE HEADER */}
+        <div className="reviewer-page-header">
+          <div className="rph-glow-orb rph-orb-1"></div>
+          <div className="rph-glow-orb rph-orb-2"></div>
+          <div className="header-breadcrumb">
+            <span>Reviewer Hub</span>
+            <i className="fa-solid fa-chevron-right" style={{ fontSize: '0.6rem' }}></i>
+            <span className="active-crumb">{currentHeader.crumb}</span>
+          </div>
+          <h2>{currentHeader.title}</h2>
+          <p className="header-subtitle">{currentHeader.subtitle}</p>
+        </div>
+
         {/* TASK FEED LIST */}
         {activeTab === 'reviewer-tasks' && (
           <div className="sub-tab active-sub-tab">
-            <h2 className="margin-bottom-md">Available Audit Tasks</h2>
             
-            {/* Stats Roster */}
-            <div className="stats-grid margin-bottom-md">
-              <div className="stat-card">
-                <div className="stat-icon"><i className="fa-solid fa-wallet text-success"></i></div>
-                <div className="stat-info">
-                  <h4>Account Wallet</h4>
-                  <div className="value">${state.currentUser.balance.toFixed(2)}</div>
+            {/* Enhanced Stats Ribbon */}
+            <div className="reviewer-stats-ribbon">
+              <div className="reviewer-stat-card fade-in-up stagger-1">
+                <div className="rsc-top">
+                  <div className="rsc-icon-badge rsc-icon-emerald">
+                    <i className="fa-solid fa-wallet"></i>
+                  </div>
+                  <span className="rsc-trend trend-up">
+                    <i className="fa-solid fa-arrow-up" style={{ fontSize: '0.55rem' }}></i> +12%
+                  </span>
+                </div>
+                <div className="rsc-label">Account Wallet</div>
+                <div className="rsc-value">${state.currentUser.balance.toFixed(2)}</div>
+                <div className="rsc-sparkline">
+                  {[35, 42, 38, 55, 48, 62, 58, 70].map((h, i) => (
+                    <div key={i} className="rsc-spark-bar" style={{ height: `${h}%` }}></div>
+                  ))}
                 </div>
               </div>
-              <div className="stat-card">
-                <div className="stat-icon"><i className="fa-solid fa-award text-indigo"></i></div>
-                <div className="stat-info">
-                  <h4>Reputation Score</h4>
-                  <div className="value">{state.currentUser.reputation}%</div>
+
+              <div className="reviewer-stat-card fade-in-up stagger-2">
+                <div className="rsc-top">
+                  <div className="rsc-icon-badge rsc-icon-violet">
+                    <i className="fa-solid fa-award"></i>
+                  </div>
+                  <span className="rsc-trend trend-up">
+                    <i className="fa-solid fa-arrow-up" style={{ fontSize: '0.55rem' }}></i> +2.1
+                  </span>
+                </div>
+                <div className="rsc-label">Reputation Score</div>
+                <div className="rsc-value">{state.currentUser.reputation}%</div>
+                <div className="rsc-sparkline">
+                  {[60, 65, 58, 72, 70, 78, 82, 90].map((h, i) => (
+                    <div key={i} className="rsc-spark-bar rsc-bar-violet" style={{ height: `${h}%` }}></div>
+                  ))}
                 </div>
               </div>
-              <div className="stat-card">
-                <div className="stat-icon"><i className="fa-solid fa-shield-halved text-rose"></i></div>
-                <div className="stat-info">
-                  <h4>Integrity Rank</h4>
-                  <div className="value">Elite Auditor</div>
+
+              <div className="reviewer-stat-card fade-in-up stagger-3">
+                <div className="rsc-top">
+                  <div className="rsc-icon-badge rsc-icon-rose">
+                    <i className="fa-solid fa-shield-halved"></i>
+                  </div>
+                  <span className="rsc-trend trend-up">
+                    <i className="fa-solid fa-crown" style={{ fontSize: '0.55rem' }}></i> Top 5%
+                  </span>
+                </div>
+                <div className="rsc-label">Integrity Rank</div>
+                <div className="rsc-value">Elite</div>
+                <div className="rsc-sparkline">
+                  {[80, 82, 85, 88, 90, 92, 94, 98].map((h, i) => (
+                    <div key={i} className="rsc-spark-bar rsc-bar-rose" style={{ height: `${h}%` }}></div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="reviewer-stat-card fade-in-up stagger-4">
+                <div className="rsc-top">
+                  <div className="rsc-icon-badge rsc-icon-amber">
+                    <i className="fa-solid fa-bolt-lightning"></i>
+                  </div>
+                  <span className="rsc-trend trend-up">
+                    <i className="fa-solid fa-arrow-up" style={{ fontSize: '0.55rem' }}></i> 3 new
+                  </span>
+                </div>
+                <div className="rsc-label">Available Tasks</div>
+                <div className="rsc-value">{availableTasks.length}</div>
+                <div className="rsc-sparkline">
+                  {[20, 40, 35, 60, 45, 55, 70, 80].map((h, i) => (
+                    <div key={i} className="rsc-spark-bar rsc-bar-amber" style={{ height: `${h}%` }}></div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Campaign Grid Cards */}
-            <div className="campaign-grid">
-              {state.campaigns
-                .filter(c => c.status === 'active' && !state.currentUser.completedCampaigns.includes(c.id))
-                .map(camp => {
-                  return (
-                    <div key={camp.id} className="job-card">
-                      <div className="job-header-row">
-                        <span className="job-type-pill">{camp.type}</span>
-                        <span className="job-match-score">98% Match</span>
-                      </div>
-                      <h3>{camp.title}</h3>
-                      <p className="job-desc">{camp.objective}</p>
-                      
-                      <div className="job-meta-row">
-                        <div className="job-payout">${camp.payoutPerReview.toFixed(2)}</div>
-                        <button className="btn btn-indigo btn-sm" onClick={() => handleAcceptTask(camp.id)}>
-                          <i className="fa-solid fa-lock-open"></i> Accept & Audit
-                        </button>
-                      </div>
+            {/* Campaign Task Cards */}
+            <div className="reviewer-tasks-header fade-in-up" style={{ animationDelay: '0.2s', opacity: 0 }}>
+              <h3>
+                <i className="fa-solid fa-fire" style={{ fontSize: '0.95rem' }}></i>
+                Open Campaigns
+              </h3>
+              <div className="rth-meta">
+                <span className="rth-live-badge">
+                  <span className="status-dot dot-active" style={{ marginRight: 0 }}></span>
+                  Live Feed
+                </span>
+                <span className="rth-count">{availableTasks.length} tasks available</span>
+              </div>
+            </div>
+
+            <div className="reviewer-task-grid fade-in-up" style={{ animationDelay: '0.25s', opacity: 0 }}>
+              {availableTasks.map((camp) => (
+                <div key={camp.id} className={`reviewer-task-card ${getTaskGradientClass(camp.type)}`}>
+                  <div className="rtc-glow-strip"></div>
+                  <div className="rtc-header">
+                    <div className="rtc-type-badge">
+                      <i className={`fa-solid ${getTaskIcon(camp.type)}`}></i>
+                      {camp.type}
                     </div>
-                  );
-                })}
+                    <span className="rtc-match-pill">
+                      <i className="fa-solid fa-bullseye"></i> 98% Match
+                    </span>
+                  </div>
+                  <h3 className="rtc-title">{camp.title}</h3>
+                  <p className="rtc-desc">{camp.objective}</p>
+                  
+                  <div className="rtc-meta-chips">
+                    <span className="rtc-chip">
+                      <i className="fa-solid fa-users"></i> {camp.targetAudience.occupation}
+                    </span>
+                    <span className="rtc-chip">
+                      <i className="fa-solid fa-earth-americas"></i> {camp.targetAudience.geo.split(' ')[0]}
+                    </span>
+                  </div>
+
+                  <div className="rtc-footer">
+                    <div className="rtc-payout">
+                      <span className="rtc-payout-label">Payout</span>
+                      <span className="rtc-payout-value">${camp.payoutPerReview.toFixed(2)}</span>
+                    </div>
+                    <button className="btn rtc-accept-btn" onClick={() => handleAcceptTask(camp.id)}>
+                      <i className="fa-solid fa-lock-open"></i> Accept & Audit
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              {availableTasks.length === 0 && (
+                <div className="reviewer-empty-state">
+                  <div className="res-icon-wrap">
+                    <i className="fa-solid fa-check-double"></i>
+                  </div>
+                  <h4>All Tasks Completed</h4>
+                  <p>You've audited all available campaigns. New tasks appear as clients launch studies.</p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -329,7 +497,6 @@ export default function ReviewerPortal({ state, setState, showToast }) {
         {/* ACTIVE WORKSPACE SANDBOX */}
         {activeTab === 'reviewer-sandbox' && activeTask && (
           <div className="sub-tab active-sub-tab">
-            <h2 className="margin-bottom-md">Active Telemetry Sandbox</h2>
             
             {/* Video Task workspace */}
             {activeTask.type === 'video' && (
@@ -344,13 +511,16 @@ export default function ReviewerPortal({ state, setState, showToast }) {
                       />
                     </div>
                     <div className="video-helper-pills">
-                      <span>Telemetry playback tracking active...</span>
-                      <span>Playback time: <strong>{sandboxTime}s</strong></span>
+                      <span><i className="fa-solid fa-signal" style={{ color: 'var(--emerald)', marginRight: '6px' }}></i>Telemetry playback tracking active...</span>
+                      <span>Playback time: <strong style={{ color: 'var(--primary)' }}>{sandboxTime}s</strong></span>
                     </div>
                   </div>
 
                   <div className="card comment-wizard-field">
-                    <div className="timestamp-stamp">Logged timestamp mark: @ {sandboxTime}s</div>
+                    <div className="timestamp-stamp">
+                      <i className="fa-solid fa-clock" style={{ color: 'var(--amber)', marginRight: '6px' }}></i>
+                      Logged timestamp mark: @ {sandboxTime}s
+                    </div>
                     <textarea
                       className="form-input"
                       rows="2"
@@ -361,13 +531,15 @@ export default function ReviewerPortal({ state, setState, showToast }) {
                       style={{ background: 'var(--bg-deep)', border: '1px solid var(--border-subtle)', padding: '10px 14px', width: '100%', color: '#fff', borderRadius: '6px' }}
                     ></textarea>
                     <button className="btn btn-indigo btn-sm margin-top-sm" onClick={handleAddVideoComment}>
-                      Add Comment Mark
+                      <i className="fa-solid fa-plus"></i> Add Comment Mark
                     </button>
                   </div>
                 </div>
 
                 <div className="card">
-                  <h4>Recorded Comments Checklist</h4>
+                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <i className="fa-solid fa-list-check text-indigo"></i> Recorded Comments
+                  </h4>
                   <ul className="added-comments-log" style={{ listStyle: 'none', paddingLeft: 0 }}>
                     {mockCommentsList.map(c => (
                       <li key={c.id}>
@@ -377,6 +549,12 @@ export default function ReviewerPortal({ state, setState, showToast }) {
                         </button>
                       </li>
                     ))}
+                    {mockCommentsList.length === 0 && (
+                      <div className="sandbox-empty-hint">
+                        <i className="fa-solid fa-comment-dots" style={{ fontSize: '1.5rem', opacity: 0.3 }}></i>
+                        <p className="small muted">Play video and add timestamped comments...</p>
+                      </div>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -430,11 +608,19 @@ export default function ReviewerPortal({ state, setState, showToast }) {
                 </div>
 
                 <div className="card">
-                  <h4>Capture hotzone coordinate remarks</h4>
+                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <i className="fa-solid fa-crosshairs text-pink"></i> Hotzone Coordinates
+                  </h4>
                   {clickCoords ? (
-                    <div className="small text-success">Captured Pin coordinates: X:{clickCoords.x}, Y:{clickCoords.y}</div>
+                    <div className="coord-capture-badge">
+                      <i className="fa-solid fa-map-pin"></i>
+                      Captured: X:{clickCoords.x}, Y:{clickCoords.y}
+                    </div>
                   ) : (
-                    <div className="small text-rose">Click coordinates on prototype mockup canvas to set focal point...</div>
+                    <div className="sandbox-empty-hint">
+                      <i className="fa-solid fa-mouse-pointer" style={{ fontSize: '1.5rem', opacity: 0.3 }}></i>
+                      <p className="small text-rose">Click on the mockup to set focal point...</p>
+                    </div>
                   )}
 
                   <textarea
@@ -494,7 +680,9 @@ export default function ReviewerPortal({ state, setState, showToast }) {
                 </div>
 
                 <div className="card">
-                  <h4>Explain comparison reasoning</h4>
+                  <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <i className="fa-solid fa-scale-balanced text-amber"></i> Comparison Reasoning
+                  </h4>
                   <textarea
                     className="form-input margin-top-md"
                     rows="3"
@@ -509,18 +697,27 @@ export default function ReviewerPortal({ state, setState, showToast }) {
             )}
 
             {/* Submit Verification Controls footer */}
-            <div className="card workspace-footer-card margin-top-md" style={{ background: 'rgba(255,255,255,0.01)', border: '1px solid var(--border-subtle)' }}>
-              <div className="workspace-fraud-indicators">
-                <span className="indicator-pill text-indigo"><i className="fa-solid fa-circle"></i> Keystrokes dynamics scanner active</span>
-                <span className="indicator-pill text-success"><i className="fa-solid fa-circle"></i> Tab focus intercept active</span>
-                <span className="indicator-pill text-rose"><i className="fa-solid fa-circle"></i> Minimum speed limit check: 15s</span>
+            <div className="reviewer-workspace-footer margin-top-md">
+              <div className="rwf-indicators">
+                <span className="rwf-indicator-pill">
+                  <span className="rwf-dot rwf-dot-violet"></span>
+                  Keystroke scanner active
+                </span>
+                <span className="rwf-indicator-pill">
+                  <span className="rwf-dot rwf-dot-emerald"></span>
+                  Tab focus intercept
+                </span>
+                <span className="rwf-indicator-pill">
+                  <span className="rwf-dot rwf-dot-rose"></span>
+                  Min speed limit: 15s
+                </span>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <button className="btn btn-secondary" onClick={() => { setActiveTaskId(null); setActiveTab('reviewer-tasks'); }}>
-                  Abort Audit
+                  <i className="fa-solid fa-xmark"></i> Abort Audit
                 </button>
-                <button className="btn btn-indigo" onClick={handleSubmitTask}>
-                  Submit Verification
+                <button className="btn rtc-accept-btn" onClick={handleSubmitTask}>
+                  <i className="fa-solid fa-paper-plane"></i> Submit Verification
                 </button>
               </div>
             </div>
@@ -530,51 +727,138 @@ export default function ReviewerPortal({ state, setState, showToast }) {
         {/* REPUTATION ROSTER PANEL */}
         {activeTab === 'reviewer-profile' && (
           <div className="sub-tab active-sub-tab">
-            <h2 className="margin-bottom-md">Reviewer Profile & Integrity Roster</h2>
-            <div className="reputation-grid">
-              <div className="rep-card">
-                <h5>Integrity Index</h5>
-                <div className="rep-circle-container">
-                  <svg className="rep-progress-svg" viewBox="0 0 100 100">
-                    <circle className="bg-circle" cx="50" cy="50" r="40" />
-                    <circle 
-                      className="fill-circle" 
-                      cx="50" 
-                      cy="50" 
-                      r="40" 
-                      style={{ strokeDashoffset: 251.2 - (251.2 * (state.currentUser.reputation / 100)) }}
-                    />
-                  </svg>
-                  <div className="rep-score-number">{state.currentUser.reputation}%</div>
+            
+            {/* Profile Header Card */}
+            <div className="reviewer-profile-hero fade-in-up">
+              <div className="rph-hero-bg-mesh"></div>
+              <div className="rph-avatar-section">
+                <div className="rph-avatar-ring">
+                  <div className="rph-avatar-inner">
+                    <i className="fa-solid fa-user-ninja"></i>
+                  </div>
                 </div>
-                <div className="rep-meta-footer text-indigo font-rose">Elite Auditor Rank</div>
-              </div>
-
-              <div className="card stat-sub-card">
-                <h3 className="margin-bottom-md">Account Metrics</h3>
-                <div className="metric-row">
-                  <span className="muted">Total payouts collected:</span>
-                  <strong className="text-success">${(state.currentUser.balance - 145.50 + 32.50).toFixed(2)}</strong>
-                </div>
-                <div className="metric-row">
-                  <span className="muted">Completed campaign audits:</span>
-                  <strong>{state.currentUser.completedCampaigns.length}</strong>
-                </div>
-                <div className="metric-row">
-                  <span className="muted">Trust score index:</span>
-                  <strong className="text-indigo">99.2% Rating</strong>
-                </div>
-
-                <h4 className="margin-top-md margin-bottom-sm">Achievement Badges</h4>
-                <div className="badges-flex">
-                  {state.currentUser.badges.map((badge, idx) => (
-                    <span key={idx} className="credential-badge">
-                      <i className="fa-solid fa-ribbon"></i> {badge}
-                    </span>
-                  ))}
+                <div className="rph-avatar-info">
+                  <h3>{state.currentUser.name}</h3>
+                  <p className="rph-role-tag">
+                    <i className="fa-solid fa-crown"></i> Elite Auditor
+                  </p>
+                  <div className="rph-badges-inline">
+                    {state.currentUser.badges.map((badge, idx) => (
+                      <span key={idx} className="rph-mini-badge">
+                        <i className="fa-solid fa-ribbon"></i> {badge}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* Score Rings Grid */}
+            <div className="reviewer-scores-grid fade-in-up" style={{ animationDelay: '0.1s', opacity: 0 }}>
+              <div className="reviewer-score-card rsc-glow-violet">
+                <div className="rscr-label">Integrity Index</div>
+                <ReviewerScoreRing 
+                  value={state.currentUser.reputation} 
+                  color="var(--primary)" 
+                  label="Integrity"
+                  size={140}
+                />
+                <div className="rscr-footer">
+                  <span className="text-indigo">Elite Auditor Rank</span>
+                </div>
+              </div>
+
+              <div className="reviewer-score-card rsc-glow-emerald">
+                <div className="rscr-label">Trust Score</div>
+                <ReviewerScoreRing 
+                  value={99.2} 
+                  color="var(--emerald)" 
+                  label="Trust"
+                  size={140}
+                />
+                <div className="rscr-footer">
+                  <span className="text-success">Verified Human</span>
+                </div>
+              </div>
+
+              <div className="reviewer-score-card rsc-glow-amber">
+                <div className="rscr-label">Response Quality</div>
+                <ReviewerScoreRing 
+                  value={96} 
+                  max={100}
+                  color="var(--amber)" 
+                  label="Quality"
+                  size={140}
+                />
+                <div className="rscr-footer">
+                  <span className="text-amber">A+ Feedback Tier</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Account Metrics Card */}
+            <div className="reviewer-metrics-card fade-in-up" style={{ animationDelay: '0.2s', opacity: 0 }}>
+              <div className="rmc-header">
+                <div className="rmc-header-icon">
+                  <i className="fa-solid fa-chart-pie"></i>
+                </div>
+                <div>
+                  <h4>Account Metrics</h4>
+                  <p className="small muted">Your comprehensive performance overview</p>
+                </div>
+              </div>
+              <div className="rmc-body">
+                <div className="rmc-metric-row">
+                  <div className="rmc-metric-item">
+                    <span className="rmc-metric-icon text-success"><i className="fa-solid fa-coins"></i></span>
+                    <div className="rmc-metric-info">
+                      <span className="rmc-metric-label">Total Payouts</span>
+                      <strong className="rmc-metric-value text-success">${(state.currentUser.balance - 145.50 + 32.50).toFixed(2)}</strong>
+                    </div>
+                  </div>
+                  <div className="rmc-metric-item">
+                    <span className="rmc-metric-icon text-indigo"><i className="fa-solid fa-clipboard-check"></i></span>
+                    <div className="rmc-metric-info">
+                      <span className="rmc-metric-label">Completed Audits</span>
+                      <strong className="rmc-metric-value">{state.currentUser.completedCampaigns.length}</strong>
+                    </div>
+                  </div>
+                  <div className="rmc-metric-item">
+                    <span className="rmc-metric-icon text-amber"><i className="fa-solid fa-clock"></i></span>
+                    <div className="rmc-metric-info">
+                      <span className="rmc-metric-label">Avg Response Time</span>
+                      <strong className="rmc-metric-value text-amber">3.8 min</strong>
+                    </div>
+                  </div>
+                  <div className="rmc-metric-item">
+                    <span className="rmc-metric-icon text-rose"><i className="fa-solid fa-triangle-exclamation"></i></span>
+                    <div className="rmc-metric-info">
+                      <span className="rmc-metric-label">Fraud Flags</span>
+                      <strong className="rmc-metric-value text-rose">0</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Achievement Badges */}
+            <div className="reviewer-badges-card fade-in-up" style={{ animationDelay: '0.3s', opacity: 0 }}>
+              <div className="rbc-header">
+                <i className="fa-solid fa-trophy text-amber"></i>
+                <h4>Achievement Badges</h4>
+              </div>
+              <div className="rbc-grid">
+                {state.currentUser.badges.map((badge, idx) => (
+                  <div key={idx} className="rbc-badge-item">
+                    <div className={`rbc-badge-icon rbc-badge-color-${idx % 4}`}>
+                      <i className={`fa-solid ${idx === 0 ? 'fa-laptop-code' : idx === 1 ? 'fa-microchip' : idx === 2 ? 'fa-magnifying-glass' : 'fa-medal'}`}></i>
+                    </div>
+                    <span className="rbc-badge-text">{badge}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
         )}
 

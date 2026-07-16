@@ -9,11 +9,18 @@ export default function App() {
   const [state, setState] = useState(() => loadAppState());
   const [activeView, setActiveView] = useState('landing');
   const [toasts, setToasts] = useState([]);
+  const [theme, setTheme] = useState(() => localStorage.getItem('attentra_theme') || 'light');
 
   // Sync state changes to localStorage
   useEffect(() => {
     saveAppState(state);
   }, [state]);
+
+  // Sync theme changes to html node
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('attentra_theme', theme);
+  }, [theme]);
 
   // Toast Notification Engine helper
   const showToast = (title, message, iconType = 'info') => {
@@ -85,6 +92,30 @@ export default function App() {
 
         {/* Dynamic User Panel & Role Selector */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          {/* Theme Selector */}
+          <div className="nav-dropdown" style={{ zIndex: 101 }}>
+            <button className="dropdown-trigger theme-btn" style={{ background: 'rgba(255, 255, 255, 0.05)', border: '1px solid var(--border-subtle)', padding: '6px 14px', borderRadius: '20px', fontSize: '0.8rem', color: 'var(--text-white)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <i className={`fa-solid ${
+                theme === 'light' ? 'fa-sun text-amber' : 
+                theme === 'dark' ? 'fa-moon text-indigo' : 
+                'fa-cloud-sun text-rose'
+              }`}></i>
+              <span className="capitalize">{theme} Theme</span>
+              <i className="fa-solid fa-chevron-down" style={{ fontSize: '0.65rem', marginLeft: '2px' }}></i>
+            </button>
+            <div className="dropdown-content theme-dropdown-content" style={{ minWidth: '160px', right: 0, left: 'auto' }}>
+              <a href="#" onClick={(e) => { e.preventDefault(); setTheme('light'); showToast('Theme Changed', 'Switched to Light Theme', 'success'); }}>
+                <i className="fa-solid fa-sun text-amber"></i> Light Theme
+              </a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setTheme('dark'); showToast('Theme Changed', 'Switched to Dark Theme', 'success'); }}>
+                <i className="fa-solid fa-moon text-indigo"></i> Dark Theme
+              </a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setTheme('sunset'); showToast('Theme Changed', 'Switched to Sunset Theme', 'success'); }}>
+                <i className="fa-solid fa-cloud-sun text-rose"></i> Sunset Warmth
+              </a>
+            </div>
+          </div>
+
           <div className="role-nav">
             <button 
               className={`nav-role-btn ${activeView === 'landing' ? 'active' : ''}`}
