@@ -74,11 +74,17 @@ export default function App() {
 
   return (
     <div className="app-wrapper">
+      {/* Dynamic Background Glow Elements */}
+      <div className="bg-glow bg-glow-1"></div>
+      <div className="bg-glow bg-glow-2"></div>
+
       {/* GLOBAL NAVBAR */}
       <header className="global-navbar">
         <div className="navbar-logo" onClick={() => handleRoleChange('landing')}>
-          <span style={{ color: 'var(--primary)' }}>Att</span>
-          <span style={{ color: 'var(--orange)' }}>entra</span>
+          <div className="logo-circle">
+            <i className="fa-solid fa-signature"></i>
+          </div>
+          Attentra
         </div>
 
         <nav className="navbar-menu-links">

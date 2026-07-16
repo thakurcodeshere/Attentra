@@ -132,79 +132,23 @@ export default function LandingPage({ setView, showToast }) {
       <section className="hero-section" id="platform">
         <div className="hero-grid-bg"></div>
         <div className="hero-content">
-          <div className="pill-badge" style={{ background: 'rgba(30, 107, 95, 0.08)', border: '1px solid rgba(30, 107, 95, 0.15)', color: 'var(--primary)', padding: '5px 14px', fontSize: '0.8rem', fontWeight: 600, display: 'inline-block', marginBottom: '1.25rem', borderRadius: '30px' }}>
-            Human Intelligence Platform
+          <div className="pill-badge">
+            <div className="pulse-emerald"></div>
+            <span>Now Auditing 12,458 Interfaces Globally</span>
           </div>
-          <h1 className="hero-title" style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--text-white)', lineHeight: 1.15, marginBottom: '1.25rem' }}>
-            Understand How People Think, React & Decide
+          <h1 className="hero-title">
+            Verified <span className="gradient-text glow-text">Human Intelligence</span> Before You Launch.
           </h1>
-          <p className="hero-subtitle" style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginBottom: '2rem', maxWidth: '520px', marginLeft: 0 }}>
-            Get verified feedback from a global network of human reviewers. Transform raw responses into actionable business insights with AI-powered analysis.
+          <p className="hero-subtitle">
+            Attentra is the largest network of verified human reviewers that helps creators, brands, and developer teams see how real people react, navigate, and make decisions.
           </p>
-          <div className="hero-ctas" style={{ justifyContent: 'flex-start', gap: '15px' }}>
-            <button className="btn btn-primary btn-lg" onClick={() => setView('client')} style={{ padding: '12px 26px' }}>
-              Start Your Campaign
+          <div className="hero-ctas">
+            <button className="btn btn-primary btn-lg" onClick={() => setView('client')}>
+              <i className="fa-solid fa-bolt"></i> Launch Campaign
             </button>
-            <button className="btn btn-secondary btn-lg" onClick={() => setView('client')} style={{ padding: '12px 26px' }}>
-              View Demo
+            <button className="btn btn-secondary btn-lg" onClick={() => setView('reviewer')}>
+              <i className="fa-solid fa-user-check"></i> Earn as Reviewer
             </button>
-          </div>
-        </div>
-
-        {/* HERO GRAPHIC RIGHT SIDE */}
-        <div className="hero-graphic">
-          <div className="interactive-graphic-container">
-            {/* Connection lines */}
-            <svg className="connections-svg" viewBox="0 0 400 300">
-              <line x1="200" y1="160" x2="60" y2="80" className="conn-line" />
-              <line x1="200" y1="160" x2="330" y2="80" className="conn-line" />
-              <line x1="200" y1="160" x2="60" y2="240" className="conn-line" />
-              <line x1="200" y1="160" x2="330" y2="240" className="conn-line" />
-              
-              <line x1="200" y1="160" x2="110" y2="120" className="conn-line" />
-              <line x1="200" y1="160" x2="280" y2="120" className="conn-line" />
-              <line x1="200" y1="160" x2="160" y2="200" className="conn-line" />
-              <line x1="200" y1="160" x2="250" y2="210" className="conn-line" />
-            </svg>
-
-            {/* Central Sphere */}
-            <div className="central-sphere-outer">
-              <div className="central-sphere-inner"></div>
-            </div>
-
-            {/* Floating cards */}
-            <div className="floating-element card-1">
-              <div className="card-mock-header header-green"></div>
-              <div className="card-mock-body">
-                <div className="line-1"></div>
-                <div className="line-2"></div>
-              </div>
-            </div>
-            
-            <div className="floating-element card-2">
-              <div className="card-mock-header header-coral"></div>
-              <div className="card-mock-body">
-                <div className="line-1"></div>
-                <div className="line-2"></div>
-              </div>
-            </div>
-
-            {/* Floating avatars */}
-            <div className="floating-element reviewer-avatar avatar-orange">
-              <i className="fa-solid fa-face-smile"></i>
-            </div>
-            <div className="floating-element reviewer-avatar avatar-teal">
-              <i className="fa-solid fa-face-laugh"></i>
-            </div>
-            <div className="floating-element reviewer-avatar avatar-gold">
-              <i className="fa-solid fa-face-laugh-beam"></i>
-            </div>
-            <div className="floating-element reviewer-avatar avatar-blue">
-              <i className="fa-solid fa-face-smile-beam"></i>
-            </div>
-            <div className="floating-element reviewer-avatar avatar-pink">
-              <i className="fa-solid fa-face-grin-stars"></i>
-            </div>
           </div>
         </div>
       </section>
@@ -256,50 +200,26 @@ export default function LandingPage({ setView, showToast }) {
 
         {/* 5. HOW IT WORKS WORKFLOW CARDS */}
         <div style={{ marginBottom: '5rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span style={{ color: 'var(--primary)', textTransform: 'uppercase', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em', display: 'block', marginBottom: '8px' }}>How it Works</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-white)' }}>
-              From Content to Insights in 4 Steps
-            </h2>
-            <p className="muted" style={{ maxWidth: '650px', margin: '10px auto 0 auto', fontSize: '0.92rem' }}>
-              Our streamlined process transforms your content into actionable business intelligence through verified human feedback and AI analysis.
-            </p>
-          </div>
+          <h2 className="text-center" style={{ marginBottom: '2.5rem', fontSize: '2rem' }}>
+            Three Steps to Human Insights
+          </h2>
           <div className="workflow-cards-flex">
-            <div className="card workflow-card-mini">
-              <div className="workflow-icon-badge" style={{ background: 'rgba(30, 107, 95, 0.1)', color: 'var(--primary)' }}>
-                <i className="fa-solid fa-file-circle-plus"></i>
-              </div>
+            <div className="card workflow-card-mini border-glow-indigo">
               <div className="workflow-num">01</div>
-              <h4>Create Your Campaign</h4>
-              <p className="small muted">Upload content, set objectives, and define your target audience with our intuitive campaign builder.</p>
+              <h4>Upload Asset</h4>
+              <p className="small muted">Upload site mockup, YouTube draft, or UI screenshot.</p>
             </div>
             <div className="arrow-indicator"><i className="fa-solid fa-arrow-right-long"></i></div>
-            <div className="card workflow-card-mini">
-              <div className="workflow-icon-badge" style={{ background: 'rgba(224, 122, 95, 0.1)', color: 'var(--orange)' }}>
-                <i className="fa-solid fa-users"></i>
-              </div>
+            <div className="card workflow-card-mini border-glow-indigo">
               <div className="workflow-num">02</div>
-              <h4>Get Human Reviews</h4>
-              <p className="small muted">Our global network of verified reviewers provides structured, authentic feedback on your content.</p>
+              <h4>Match Testers</h4>
+              <p className="small muted">Filter by developers, gamers, or geo demographics.</p>
             </div>
             <div className="arrow-indicator"><i className="fa-solid fa-arrow-right-long"></i></div>
-            <div className="card workflow-card-mini">
-              <div className="workflow-icon-badge" style={{ background: 'rgba(242, 204, 143, 0.2)', color: '#d4a35c' }}>
-                <i className="fa-solid fa-link"></i>
-              </div>
+            <div className="card workflow-card-mini border-glow-indigo">
               <div className="workflow-num">03</div>
-              <h4>AI-Powered Analysis</h4>
-              <p className="small muted">Advanced AI processes responses to validate quality and extract meaningful patterns from human feedback.</p>
-            </div>
-            <div className="arrow-indicator"><i className="fa-solid fa-arrow-right-long"></i></div>
-            <div className="card workflow-card-mini">
-              <div className="workflow-icon-badge" style={{ background: 'rgba(129, 178, 154, 0.2)', color: '#568f74' }}>
-                <i className="fa-solid fa-chart-simple"></i>
-              </div>
-              <div className="workflow-num">04</div>
-              <h4>Actionable Insights</h4>
-              <p className="small muted">Receive clear, data-driven recommendations to optimize your content and strategy decisions.</p>
+              <h4>Audit Actions</h4>
+              <p className="small muted">Inspect click coordinate maps and second-by-second dropoffs.</p>
             </div>
           </div>
         </div>
@@ -351,7 +271,7 @@ export default function LandingPage({ setView, showToast }) {
             </button>
           </div>
 
-          <div style={{ background: 'var(--bg-deep)', border: '1px solid var(--border-subtle)', borderRadius: '12px', padding: '1.5rem', minHeight: '260px' }}>
+          <div style={{ background: 'rgba(0,0,0,0.15)', borderRadius: '12px', padding: '1.5rem', minHeight: '260px' }}>
             {!analysisDone ? (
               <div className="demo-report-placeholder">
                 <i className="fa-solid fa-hourglass-start" style={{ fontSize: '2rem' }}></i>
@@ -380,63 +300,31 @@ export default function LandingPage({ setView, showToast }) {
           </div>
         </div>
 
-        {/* 7. EVERYTHING YOU NEED SECTION */}
+        {/* 7. SOLUTIONS GRID */}
         <div id="solutions" style={{ marginBottom: '5rem' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, color: 'var(--text-white)' }}>
-              Everything You Need for Human Intelligence
-            </h2>
-            <p className="muted" style={{ maxWidth: '650px', margin: '10px auto 0 auto', fontSize: '0.92rem' }}>
-              A complete platform for gathering, analyzing, and acting on verified human feedback at scale.
-            </p>
-          </div>
-          <div className="grid-3" style={{ gap: '24px' }}>
-            <div className="card feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: '#ffffff', borderRadius: '20px', border: '1px solid rgba(30, 107, 95, 0.08)', boxShadow: '0 10px 30px rgba(30, 107, 95, 0.03)' }}>
-              <div className="feature-icon-badge" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(30, 107, 95, 0.08)', color: '#1e6b5f', fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                <i className="fa-solid fa-list-check"></i>
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '10px' }}>Campaign Management</h4>
-              <p className="small muted" style={{ lineHeight: 1.5 }}>Create, launch, and manage campaigns with an intuitive dashboard. Track progress and reviewer engagement in real-time.</p>
+          <h2 className="text-center" style={{ marginBottom: '2.5rem', fontSize: '2rem' }}>
+            Built for Modern Digital Products
+          </h2>
+          <div className="solutions-grid">
+            <div className="card solution-card border-glow-rose">
+              <i className="fa-solid fa-laptop-code text-rose"></i>
+              <h3>UI/UX Audits</h3>
+              <p className="small muted text-center">Friction maps & page flow navigation analysis.</p>
             </div>
-
-            <div className="card feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: '#ffffff', borderRadius: '20px', border: '1px solid rgba(30, 107, 95, 0.08)', boxShadow: '0 10px 30px rgba(30, 107, 95, 0.03)' }}>
-              <div className="feature-icon-badge" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(224, 122, 95, 0.08)', color: '#e07a5f', fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                <i className="fa-solid fa-earth-americas"></i>
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '10px' }}>Global Reviewer Network</h4>
-              <p className="small muted" style={{ lineHeight: 1.5 }}>Access diverse perspectives from 50,000+ verified reviewers across 120+ countries and countless demographics.</p>
+            <div className="card solution-card border-glow-emerald">
+              <i className="fa-solid fa-photo-film text-emerald"></i>
+              <h3>YouTube Hooks</h3>
+              <p className="small muted text-center">Pinpoint exactly where viewers scroll past or leave.</p>
             </div>
-
-            <div className="card feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: '#ffffff', borderRadius: '20px', border: '1px solid rgba(30, 107, 95, 0.08)', boxShadow: '0 10px 30px rgba(30, 107, 95, 0.03)' }}>
-              <div className="feature-icon-badge" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(242, 204, 143, 0.15)', color: '#d4a35c', fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                <i className="fa-solid fa-brain"></i>
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '10px' }}>AI-Powered Analysis</h4>
-              <p className="small muted" style={{ lineHeight: 1.5 }}>Advanced AI models process feedback to generate actionable recommendations, quality scores, and trend analysis.</p>
+            <div className="card solution-card border-glow-indigo">
+              <i className="fa-solid fa-mobile-screen-button text-indigo"></i>
+              <h3>Mobile Apps</h3>
+              <p className="small muted text-center">Test tap accuracy and swipe navigation on real devices.</p>
             </div>
-
-            <div className="card feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: '#ffffff', borderRadius: '20px', border: '1px solid rgba(30, 107, 95, 0.08)', boxShadow: '0 10px 30px rgba(30, 107, 95, 0.03)' }}>
-              <div className="feature-icon-badge" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(242, 204, 143, 0.15)', color: '#d4a35c', fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                <i className="fa-solid fa-code"></i>
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '10px' }}>Developer API</h4>
-              <p className="small muted" style={{ lineHeight: 1.5 }}>Integrate human intelligence directly into your applications with our comprehensive REST API and SDKs.</p>
-            </div>
-
-            <div className="card feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: '#ffffff', borderRadius: '20px', border: '1px solid rgba(30, 107, 95, 0.08)', boxShadow: '0 10px 30px rgba(30, 107, 95, 0.03)' }}>
-              <div className="feature-icon-badge" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(30, 107, 95, 0.08)', color: '#1e6b5f', fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                <i className="fa-solid fa-shield-halved"></i>
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '10px' }}>Quality Assurance</h4>
-              <p className="small muted" style={{ lineHeight: 1.5 }}>Multi-layer validation with AI scoring, fraud detection, and human audit ensures data integrity at every step.</p>
-            </div>
-
-            <div className="card feature-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: '#ffffff', borderRadius: '20px', border: '1px solid rgba(30, 107, 95, 0.08)', boxShadow: '0 10px 30px rgba(30, 107, 95, 0.03)' }}>
-              <div className="feature-icon-badge" style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(129, 178, 154, 0.15)', color: '#568f74', fontSize: '1.1rem', marginBottom: '1.25rem' }}>
-                <i className="fa-solid fa-chart-line"></i>
-              </div>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-white)', marginBottom: '10px' }}>Real-Time Dashboard</h4>
-              <p className="small muted" style={{ lineHeight: 1.5 }}>Visualize campaign performance, reviewer engagement, and insight trends in one unified analytics view.</p>
+            <div className="card solution-card border-glow-rose">
+              <i className="fa-solid fa-rectangle-ad text-rose"></i>
+              <h3>Ad Creatives</h3>
+              <p className="small muted text-center">Gauge visual appeal before launching display ads.</p>
             </div>
           </div>
         </div>
@@ -549,7 +437,7 @@ export default function LandingPage({ setView, showToast }) {
                 className="form-input" 
                 value={roiAudience} 
                 onChange={(e) => setRoiAudience(Number(e.target.value))}
-                style={{ background: 'var(--bg-deep)', color: 'var(--text-white)', border: '1px solid var(--border-subtle)', padding: '8px 12px', width: '100%', borderRadius: '6px' }}
+                style={{ background: 'var(--bg-deep)', color: '#fff', border: '1px solid var(--border-subtle)', padding: '8px 12px', width: '100%', borderRadius: '6px' }}
               >
                 <option value="2.00">General Public ($2.00 / Review)</option>
                 <option value="6.00">Software Developers ($6.00 / Review)</option>
@@ -734,61 +622,65 @@ export default function LandingPage({ setView, showToast }) {
           </div>
         </div>
 
-        {/* 31. CTA GRADIENT BANNER CARD */}
-        <div className="card text-center cta-gradient-banner" style={{ padding: '4.5rem 2rem', marginBottom: '5rem', background: 'linear-gradient(135deg, #1e6b5f 0%, #113f38 100%)', border: 'none', borderRadius: '24px', color: '#ffffff', boxShadow: '0 20px 40px rgba(30, 107, 95, 0.15)' }}>
-          <h2 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#ffffff', marginBottom: '12px' }}>
-            Ready to Understand Your Audience?
-          </h2>
-          <p style={{ color: 'rgba(255, 255, 255, 0.85)', fontSize: '1rem', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
-            Join thousands of businesses using Attentra to make data-driven decisions powered by real human intelligence.
+        {/* 31. NEWSLETTER */}
+        <div className="card text-center border-glow-indigo" style={{ padding: '3rem 1.5rem', marginBottom: '5rem' }}>
+          <h3>Get Human Intelligence Reports</h3>
+          <p className="muted small" style={{ marginBottom: '1.5rem' }}>
+            Join 4,000+ developers getting monthly case studies on UI failure points.
           </p>
-          <div className="hero-ctas" style={{ justifyContent: 'center', gap: '15px' }}>
-            <button className="btn btn-secondary btn-lg" onClick={() => setView('client')} style={{ background: '#ffffff', color: '#1e6b5f', border: 'none', padding: '12px 28px', fontWeight: 600 }}>
-              Get Started Free
-            </button>
-            <button className="btn btn-secondary btn-lg" onClick={() => setView('client')} style={{ background: 'transparent', color: '#ffffff', border: '1px solid #ffffff', padding: '12px 28px' }}>
-              Contact Sales
+          <div className="newsletter-input-box">
+            <input 
+              type="email" 
+              placeholder="Enter your email" 
+              style={{ background: 'var(--bg-deep)', border: '1px solid var(--border-subtle)', color: '#fff', padding: '12px 18px', width: '300px', borderRadius: '6px' }}
+            />
+            <button className="btn btn-indigo btn-lg" onClick={() => showToast('Subscribed', 'Thank you for subscribing!', 'success')}>
+              Subscribe
             </button>
           </div>
         </div>
       </div>
 
       {/* 32. DEEP FOOTER */}
-      <footer className="landing-footer" style={{ background: '#1e3530', borderTop: '1px solid rgba(255, 255, 255, 0.05)', padding: '4rem 2rem 2rem 2rem', marginTop: '5rem' }}>
+      <footer className="landing-footer">
         <div className="footer-grid">
           <div className="footer-col-logo">
-            <div className="navbar-logo" style={{ background: 'none', WebkitTextFillColor: 'initial', fontSize: '1.5rem', fontWeight: 800, cursor: 'default' }}>
-              <span style={{ color: '#ffffff' }}>Att</span>
-              <span style={{ color: 'var(--orange)' }}>entra</span>
+            <div className="navbar-logo">
+              <div className="logo-circle">
+                <i className="fa-solid fa-signature"></i>
+              </div>
+              Attentra
             </div>
-            <p className="small" style={{ color: 'rgba(255, 255, 255, 0.6)', marginTop: '12px', maxWidth: '280px', lineHeight: 1.5 }}>
-              The global human intelligence platform for understanding how people think, react, and decide.
+            <p className="small muted">
+              The world's largest platform for verified human attention and digital operations feedback.
             </p>
           </div>
           <div className="footer-col-links">
-            <h5 style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.2rem' }}>Platform</h5>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Campaigns</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Insights</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Developer Portal</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('reviewer'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Reviewer Dashboard</a>
+            <h5>Product</h5>
+            <a href="#platform">How it works</a>
+            <a href="#solutions">Solutions</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#docs">Security Shield</a>
           </div>
           <div className="footer-col-links">
-            <h5 style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.2rem' }}>Account</h5>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Log In</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Sign Up</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Dashboard</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('client'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Billing</a>
+            <h5>Ecosystem</h5>
+            <a href="#docs">Developer API</a>
+            <a href="#platform">Reviewer network</a>
+            <a href="#platform">Status updates</a>
+            <a href="#platform">Roadmap</a>
           </div>
           <div className="footer-col-links">
-            <h5 style={{ color: '#ffffff', fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1.2rem' }}>Admin</h5>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('admin'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Admin Dashboard</a>
-            <a href="#platform" onClick={(e) => { e.preventDefault(); setView('admin'); }} style={{ color: 'rgba(255, 255, 255, 0.6)' }}>Task Management</a>
+            <h5>Legal</h5>
+            <a href="#platform">Terms of Service</a>
+            <a href="#platform">Privacy Policy</a>
+            <a href="#platform">GDPR protection</a>
+            <a href="#platform">SOC2 Audit</a>
           </div>
         </div>
-        <div className="footer-bottom-row" style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '1.5rem', marginTop: '3rem' }}>
-          <span className="small" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>&copy; 2026 Attentra Inc. All rights reserved.</span>
-          <div className="footer-status-pill" style={{ background: 'rgba(46, 204, 113, 0.1)', border: '1px solid rgba(46, 204, 113, 0.2)', color: '#2ecc71' }}>
-            <div className="pulse-emerald" style={{ background: '#2ecc71', boxShadow: '0 0 8px #2ecc71' }}></div>
+        <div className="footer-bottom-row">
+          <span className="small muted">&copy; 2026 Attentra Inc. All rights reserved.</span>
+          <div className="footer-status-pill">
+            <div className="pulse-emerald"></div>
             <span>All Systems Operational</span>
           </div>
         </div>
